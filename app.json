@@ -3,9 +3,11 @@
     "name": "langApp",
     "slug": "langApp",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"],
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./src/assets/images/splash.png"
+    }
   },
   "name": "langApp"
 }
