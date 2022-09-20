@@ -1,7 +1,16 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity, Text } from "react-native";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components/native";
+import {
+  chainString,
+  pastString,
+  projectString,
+  snstString,
+  subscirbeProject,
+  todayString,
+} from "../atom";
 import { IInfo } from "../screens/Feed";
 
 interface HMediaProps {
@@ -27,16 +36,63 @@ interface IData {
   SNS: string;
 }
 // const FeedData = ({ nftData }: IProps) => {
-// function FeedData({ nftData }: IProps) {
-const FeedData: React.FC<IProps> = ({
-  nftData,
+function FeedData({ nftData }: IProps, { _id }: IData) {
+  //recoil value
+  const chain = useRecoilValue(chainString);
+  const project = useRecoilValue(projectString);
+  const sns = useRecoilValue(snstString);
+  const today = useRecoilValue(todayString);
+  const past = useRecoilValue(pastString);
+  const subscribe = useRecoilValue(subscirbeProject);
+  //recoil state
 
-  // _id,
-  // createdAt,
-  // nft,
-  // thumbnail,
-  // fullData,
-}) => {
+  //filter
+  const filter = (info: IData) => {
+    let chainBool: boolean = true;
+    let projectBool: boolean = true;
+    let snsBool: boolean = true;
+    let dateBool: boolean = true;
+    let subscribeBool: boolean = true;
+    const date = new Date(Date.parse(info.createdAt)).getTime();
+    if (chain !== "") {
+      chainBool = info.chain === chain.toUpperCase();
+    }
+    if (project !== "") {
+      projectBool =
+        info.nft ===
+        project
+          .replaceAll(" ", "")
+          .replaceAll("-", "")
+          .replaceAll("`", "")
+          .toLowerCase();
+    }
+    if (sns !== "") {
+      snsBool = info.SNS === sns;
+    }
+    if (today.getTime() - date < 0 || date - past.getTime() < 0) {
+      dateBool = false;
+    }
+    if (subscribe.length !== 0) {
+      subscribeBool = subscribe.includes(
+        info.nft
+          .replaceAll(" ", "")
+          .replaceAll("-", "")
+          .replaceAll("`", "")
+          .toLowerCase()
+      );
+    }
+    return chainBool && projectBool && snsBool && dateBool && subscribeBool;
+  };
+
+  // const FeedData: React.FC<IProps> = ({
+  //   nftData,
+
+  //   // _id,
+  //   // createdAt,
+  //   // nft,
+  //   // thumbnail,
+  //   // fullData,
+  // }) => {
   const navigation = useNavigation();
   const goToDetail = () => {
     // @ts-ignore
@@ -48,50 +104,36 @@ const FeedData: React.FC<IProps> = ({
     });
   };
   //setData
-  // const [data, setData] = useState<IData[]>(Object.values(nftData?.data));
-  // useEffect(() => setData(Object.values(nftData.data)), [nftData]);
+  // console.log(nftData.data[1]._id);
+  const [data, setData] = useState<IData[]>(Object.values(nftData?.data));
+  // console.log(data[2]._id);
+  useEffect(() => setData(Object.values(nftData.data)), [nftData]);
 
-  // console.log(data);
-  // console.log(nftData);
-  // console.log("hi");
+  // const [data, setData] = useState(nftData?.data);
+  // useEffect(() => setData(nftData.data), [nftData]);
 
   // useEffect(() => {
-  //   setData(Object.values(nftData?.data).filter(filter));
+  //   setData((nftData?.data).filter(filter));
   // }, [chain, project, sns, today, past, subscribe, nftData]);
+  useEffect(() => {
+    setData(Object.values(nftData?.data).filter(filter));
+  }, [chain, project, sns, today, past, subscribe, nftData]);
 
   //
+  // console.log(data._id);
 
   return (
     <TouchableOpacity onPress={goToDetail}>
       <Text>hi</Text>
-      {/* <Text>{data._id}</Text> */}
-      {/* <HMovie>
-        <Poster path={posterPath} />
-        <HColumn>
-          <Title>
-            {originalTitle.length > 30
-              ? `${originalTitle.slice(0, 30)}...`
-              : originalTitle}
-          </Title>
-          {releaseDate ? (
-            <Release>
-              {new Date(releaseDate).toLocaleDateString("ko", {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </Release>
-          ) : null}
-          {voteAverage ? <Votes votes={voteAverage} /> : null}
-          <Overview>
-            {overview !== "" && overview.length > 140
-              ? `${overview.slice(0, 140)}...`
-              : overview}
-          </Overview>
-        </HColumn>
-      </HMovie> */}
+      {data.map((info, index) => (
+        <Text>{info.nft}</Text>
+      ))}
+      {/* <Text>{data[1].nft}</Text> */}
+      {/* <Text>{data[2].nft}</Text> */}
+
+      {/* <Text>{data[3]._id}</Text> */}
     </TouchableOpacity>
   );
-};
+}
 
 export default FeedData;

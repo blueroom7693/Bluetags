@@ -39,6 +39,7 @@ const ImageText = styled.Text`
 `;
 const OverallContainer = styled.View`
   flex: 1;
+  color: white;
 `;
 const NFTContainer = styled.View`
   flex: 1;

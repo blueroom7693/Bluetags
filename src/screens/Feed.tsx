@@ -1,6 +1,7 @@
 import {
   FlatList,
   SafeAreaView,
+  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -10,14 +11,16 @@ import {
 import styled from "styled-components/native";
 import { getAllNft, IData } from "../axios";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { logUserOut } from "../async";
 import { useRecoilState } from "recoil";
-import { chainString, isLogined, projectString } from "../atom";
+import { chainString, isLogined, projectString, snstString } from "../atom";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import FeedData from "../components/FeedData";
 import { Picker } from "@react-native-picker/picker";
+import BottomSheet from "@gorhom/bottom-sheet";
+import BottomFilter from "../components/bottomsheet/BottomFilter";
 
 export interface IInfo {
   data: IData;
@@ -37,6 +40,7 @@ const HomeContainer = styled.View`
 `;
 const NFTList = styled.FlatList`
   flex: 2;
+  background-color: white;
 `;
 
 export interface IInfo {
@@ -46,7 +50,6 @@ export interface IInfo {
 // main
 export default function Feed() {
   //filter
-
   //logout
   const [isLogin, setIsLogin] = useRecoilState(isLogined);
   const signOut = async () => {
@@ -63,7 +66,10 @@ export default function Feed() {
   //selector
   const [chain, setChain] = useRecoilState(chainString);
   const [project, setProject] = useRecoilState(projectString);
-  console.log(NftData);
+  const [sns, setSns] = useRecoilState(snstString);
+  console.log(chain);
+  // console.log(NftData.data[1].nft);
+  // console.log(NftData.data[1]._id);s
   //RETURN
   return (
     <HomeContainer>
@@ -72,6 +78,7 @@ export default function Feed() {
           <TouchableOpacity onPress={signOut}>
             <Text>sign out</Text>
           </TouchableOpacity>
+
           {/* picker */}
           <Picker
             selectedValue={chain}
@@ -82,14 +89,26 @@ export default function Feed() {
             <Picker.Item label="SOL" value="SOL" />
             <Picker.Item label="KLAY" value="KLAY" />
           </Picker>
+          <Picker
+            selectedValue={sns}
+            onValueChange={(itemValue, itemIndex) => setSns(itemValue)}
+          >
+            <Picker.Item label="ALL" value="" />
+            <Picker.Item label="twitter" value="twitter" />
+            <Picker.Item label="discord" value="discord" />
+          </Picker>
           {/* picker */}
 
-          {/* <NFTList
+          <NFTList
             data={NftData.data}
             keyExtractor={(item) => item._id}
+            // keyExtractor={(item) => {
+            //   console.log(item._id);
+            // }}
             // renderItem={renderItem}
             renderItem={({ item }) => (
               <FeedData
+                // nftData={NftData}
                 nftData={NftData}
                 // _id={item._id}
                 // createdAt={item.createdAt}
@@ -98,7 +117,11 @@ export default function Feed() {
                 // fullData={item}
               ></FeedData>
             )}
-          /> */}
+          />
+
+          <View></View>
+          {/* Bottom Sheet */}
+          <BottomFilter />
         </SafeAreaView>
       )}
     </HomeContainer>

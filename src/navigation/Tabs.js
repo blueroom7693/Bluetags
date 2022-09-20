@@ -25,6 +25,10 @@ const DrawerBtnContainer = styled.View`
   margin-left: 15px;
 `;
 
+const HeaderRight = styled.View`
+  flex-direction: row;
+`;
+
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
@@ -64,25 +68,6 @@ const Tabs = () => {
       }}
     >
       <Tab.Screen
-        name="Home"
-        component={Home}
-        options={({ navigation, route }) => ({
-          headerLeft: () => (
-            <DrawerBtnContainer>
-              <Ionicons
-                name="menu"
-                size={32}
-                color="white"
-                onPress={() => navigation.openDrawer()}
-              />
-            </DrawerBtnContainer>
-          ),
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name={"home-filled"} color={color} size={30} />
-          ),
-        })}
-      />
-      <Tab.Screen
         name="trending"
         component={Feed}
         options={({ navigation, route }) => ({
@@ -106,25 +91,55 @@ const Tabs = () => {
         })}
       />
       <Tab.Screen
-        name="Search"
-        component={Search}
+        name="Home"
+        component={Home}
         options={({ navigation, route }) => ({
           headerLeft: () => (
             <DrawerBtnContainer>
               <Ionicons
                 name="menu"
-                size={24}
+                size={32}
                 color="white"
                 onPress={() => navigation.openDrawer()}
               />
             </DrawerBtnContainer>
           ),
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="search" color={color} size={30} />
+            <MaterialIcons name={"home-filled"} color={color} size={30} />
+          ),
+          headerRight: ({ color, size }) => (
+            <HeaderRight>
+              <MaterialIcons name={"home-filled"} color={"white"} size={30} />
+              <Ionicons
+                name="search"
+                color={"white"}
+                size={30}
+                onPress={() =>
+                  navigation.navigate("Stack", {
+                    screen: "Search",
+                    params: {
+                      // ...fullData,
+                    },
+                  })
+                }
+              />
+              <Ionicons
+                name={"person"}
+                color={"white"}
+                size={30}
+                onPress={() =>
+                  navigation.navigate("Stack", {
+                    screen: "Profile",
+                    params: {
+                      // ...fullData,
+                    },
+                  })
+                }
+              />
+            </HeaderRight>
           ),
         })}
       />
-
       <Tab.Screen
         name="Watchlist"
         component={Watchlist}
@@ -143,27 +158,6 @@ const Tabs = () => {
           ),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="star" color={color} size={30} />
-          ),
-        })}
-      />
-
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={({ navigation, route }) => ({
-          headerTitle: "",
-          headerLeft: () => (
-            <DrawerBtnContainer>
-              <Ionicons
-                name="menu"
-                size={24}
-                color="white"
-                onPress={() => navigation.openDrawer()}
-              />
-            </DrawerBtnContainer>
-          ),
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name={"person"} color={color} size={30} />
           ),
         })}
       />
