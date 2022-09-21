@@ -13,6 +13,7 @@ import {
 } from "../atom";
 import { IInfo } from "../screens/Feed";
 
+//INTERFACE
 interface HMediaProps {
   _id: string;
   createdAt: string;
@@ -35,7 +36,11 @@ interface IData {
   unlikes: [string];
   SNS: string;
 }
-// const FeedData = ({ nftData }: IProps) => {
+//CSS
+const HeaderText = styled.Text`
+  color: white;
+`;
+//MAIN
 function FeedData({ nftData }: IProps, { _id }: IData) {
   //recoil value
   const chain = useRecoilValue(chainString);
@@ -84,15 +89,7 @@ function FeedData({ nftData }: IProps, { _id }: IData) {
     return chainBool && projectBool && snsBool && dateBool && subscribeBool;
   };
 
-  // const FeedData: React.FC<IProps> = ({
-  //   nftData,
-
-  //   // _id,
-  //   // createdAt,
-  //   // nft,
-  //   // thumbnail,
-  //   // fullData,
-  // }) => {
+  // NAVIGATION
   const navigation = useNavigation();
   const goToDetail = () => {
     // @ts-ignore
@@ -104,34 +101,19 @@ function FeedData({ nftData }: IProps, { _id }: IData) {
     });
   };
   //setData
-  // console.log(nftData.data[1]._id);
   const [data, setData] = useState<IData[]>(Object.values(nftData?.data));
-  // console.log(data[2]._id);
   useEffect(() => setData(Object.values(nftData.data)), [nftData]);
-
-  // const [data, setData] = useState(nftData?.data);
-  // useEffect(() => setData(nftData.data), [nftData]);
-
-  // useEffect(() => {
-  //   setData((nftData?.data).filter(filter));
-  // }, [chain, project, sns, today, past, subscribe, nftData]);
   useEffect(() => {
     setData(Object.values(nftData?.data).filter(filter));
   }, [chain, project, sns, today, past, subscribe, nftData]);
 
-  //
-  // console.log(data._id);
-
+  //RETURN
   return (
     <TouchableOpacity onPress={goToDetail}>
-      <Text>hi</Text>
+      <HeaderText>hi</HeaderText>
       {data.map((info, index) => (
-        <Text>{info.nft}</Text>
+        <HeaderText>{info.nft}</HeaderText>
       ))}
-      {/* <Text>{data[1].nft}</Text> */}
-      {/* <Text>{data[2].nft}</Text> */}
-
-      {/* <Text>{data[3]._id}</Text> */}
     </TouchableOpacity>
   );
 }

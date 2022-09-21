@@ -1,59 +1,54 @@
 import React, { useCallback, useRef, useMemo, useState } from "react";
 import { StyleSheet, View, Text, Button } from "react-native";
-import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import BottomSheet, {
+  BottomSheetFlatList,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isBottomFilter } from "../../atom";
+import styled from "styled-components/native";
+import CustomBackground from "../custom/CustomBackground";
+import { Entypo } from "@expo/vector-icons";
 
 const BottomFilter = () => {
   // hooks
   const sheetRef = useRef<BottomSheet>(null);
-  // DATA
-  const data = useMemo(
-    () =>
-      Array(50)
-        .fill(0)
-        .map((_, index) => `index-${index}`),
-    []
-  );
   // SNAPPOINT
-  // const snapPoints = useMemo(() => ["30%", "50%", "90%"], []);
   const snapPoints = ["80%"];
   //ISOPEN RECOIL
   const [isOpen, setIsOpen] = useRecoilState(isBottomFilter);
-  // callbacks
-  const handleSheetChange = useCallback((index) => {
-    console.log("handleSheetChange", index);
-  }, []);
-  const handleSnapPress = useCallback((index) => {
-    sheetRef.current?.snapToIndex(index);
-  }, []);
-  const handleClosePress = useCallback(() => {
-    sheetRef.current?.close();
-  }, []);
+  //CSS
+  const BottomContainerText = styled.Text`
+    color: white;
+    font-size: 20px;
+    padding-left: 20px;
+  `;
+  const TopSection = styled.View`
+    border-bottom-width: 1px;
+    border-color: grey;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  `;
 
-  // render
-  const renderItem = useCallback(
-    ({ item }) => (
-      <View style={styles.itemContainer}>
-        <Text>{item}</Text>
-      </View>
-    ),
-    []
-  );
   return isOpen ? (
     <BottomSheet
       ref={sheetRef}
       snapPoints={snapPoints}
-      // onChange={handleSheetChange}
       enablePanDownToClose={true}
       onClose={() => setIsOpen(false)}
+      // backgroundComponent={CustomBackground}
+      backgroundStyle={styles.container}
     >
-      <BottomSheetFlatList
-        data={data}
-        keyExtractor={(i) => i}
-        renderItem={renderItem}
-        contentContainerStyle={styles.contentContainer}
-      />
+      <BottomSheetView style={styles.container}>
+        <TopSection>
+          <BottomContainerText>Filter</BottomContainerText>
+          <Entypo name="cross" size={36} color="white" />
+        </TopSection>
+        <BottomContainerText>hello</BottomContainerText>
+        <BottomContainerText>hello</BottomContainerText>
+        <BottomContainerText>hello</BottomContainerText>
+      </BottomSheetView>
     </BottomSheet>
   ) : null;
 };
@@ -61,15 +56,7 @@ const BottomFilter = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 200,
-  },
-  contentContainer: {
-    backgroundColor: "white",
-  },
-  itemContainer: {
-    padding: 6,
-    margin: 6,
-    backgroundColor: "#eee",
+    backgroundColor: "#3d3d3d",
   },
 });
 
