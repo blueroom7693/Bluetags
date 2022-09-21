@@ -1,12 +1,13 @@
-import React, { useCallback, useRef, useMemo } from "react";
+import React, { useCallback, useRef, useMemo, useState } from "react";
 import { StyleSheet, View, Text, Button } from "react-native";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isBottomFilter } from "../../atom";
 
 const BottomFilter = () => {
   // hooks
   const sheetRef = useRef<BottomSheet>(null);
-
-  // variables
+  // DATA
   const data = useMemo(
     () =>
       Array(50)
@@ -14,8 +15,11 @@ const BottomFilter = () => {
         .map((_, index) => `index-${index}`),
     []
   );
-  const snapPoints = useMemo(() => ["5%", "50%", "90%"], []);
-
+  // SNAPPOINT
+  // const snapPoints = useMemo(() => ["30%", "50%", "90%"], []);
+  const snapPoints = ["80%"];
+  //ISOPEN RECOIL
+  const [isOpen, setIsOpen] = useRecoilState(isBottomFilter);
   // callbacks
   const handleSheetChange = useCallback((index) => {
     console.log("handleSheetChange", index);
@@ -36,16 +40,13 @@ const BottomFilter = () => {
     ),
     []
   );
-  return (
-    // <View style={styles.container}>
-    //   <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
-    //   <Button title="Snap To 50%" onPress={() => handleSnapPress(1)} />
-    //   <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} />
-    //   <Button title="Close" onPress={() => handleClosePress()} />
+  return isOpen ? (
     <BottomSheet
       ref={sheetRef}
       snapPoints={snapPoints}
-      onChange={handleSheetChange}
+      // onChange={handleSheetChange}
+      enablePanDownToClose={true}
+      onClose={() => setIsOpen(false)}
     >
       <BottomSheetFlatList
         data={data}
@@ -54,8 +55,7 @@ const BottomFilter = () => {
         contentContainerStyle={styles.contentContainer}
       />
     </BottomSheet>
-    // </View>
-  );
+  ) : null;
 };
 
 const styles = StyleSheet.create({

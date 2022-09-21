@@ -5,7 +5,11 @@ import { NavigationContainer } from "@react-navigation/native";
 // import Root from "./navigation/Root";
 import { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme, Pallet } from "./src/utils/styled";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
 import MyDrawer from "./src/navigation/Drawer";
 import AuthStack from "./src/navigation/AuthStack";
 import { RecoilRoot, useRecoilState } from "recoil";
@@ -17,8 +21,12 @@ import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getUserStored } from "./src/async";
-
+import { getAllNft, IData } from "./src/axios";
 SplashScreen.preventAutoHideAsync();
+
+export interface IInfo {
+  data: IData;
+}
 
 export default function App() {
   // 쿠키 확인 및 로그인 토큰
@@ -35,6 +43,13 @@ export default function App() {
         if (token !== (undefined || null)) {
           console.log(token);
           setIsLogin(true);
+          //데이터 한번에 받아오기
+          //query
+          // const { isLoading: isLoadingNft, data: NftData } = useQuery<IInfo>(
+          //   ["homeInfo"],
+          //   getAllNft
+          // );
+          // console.log(NftData);
         }
         // await new Promise((resolve) => setTimeout(resolve, 100));
       } catch (e) {

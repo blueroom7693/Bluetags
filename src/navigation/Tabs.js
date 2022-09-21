@@ -43,10 +43,10 @@ const Tabs = () => {
           backgroundColor: isDark ? LIGHT_GREY : LIGHT_GREY,
           height: 50,
           position: "absolute",
-          bottom: 16,
-          left: 16,
-          right: 16,
-          borderRadius: 16,
+          // bottom: 16,
+          // left: 16,
+          // right: 16,
+          // borderRadius: 16,
           borderColor: BLACK_COLOR,
           borderWidth: 2,
         },
@@ -64,7 +64,7 @@ const Tabs = () => {
           fontWeight: "600",
         },
         headerShown: true,
-        tabBarShowLabel: false,
+        // tabBarShowLabel: false,
       }}
     >
       <Tab.Screen

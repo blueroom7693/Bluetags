@@ -1,6 +1,16 @@
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
 
+export const isBottomFilter = atom({
+  key: "isbottomFilter",
+  default: false,
+});
+
+export const isBottomDetail = atom({
+  key: "isbottomDetail",
+  default: false,
+});
+
 export const isLogined = atom({
   key: "isLogined",
   default: false,

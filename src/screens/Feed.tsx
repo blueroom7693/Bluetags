@@ -1,4 +1,5 @@
 import {
+  Button,
   FlatList,
   SafeAreaView,
   ScrollView,
@@ -14,7 +15,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { logUserOut } from "../async";
 import { useRecoilState } from "recoil";
-import { chainString, isLogined, projectString, snstString } from "../atom";
+import {
+  chainString,
+  isBottomDetail,
+  isBottomFilter,
+  isLogined,
+  projectString,
+  snstString,
+} from "../atom";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import FeedData from "../components/FeedData";
@@ -43,13 +51,18 @@ const NFTList = styled.FlatList`
   background-color: white;
 `;
 
-export interface IInfo {
-  data: IData;
-}
-
 // main
 export default function Feed() {
-  //filter
+  //BOTTOM FILTER
+  const [bottomFilter, setBottomFilter] = useRecoilState(isBottomFilter);
+  const openFilter = () => {
+    setBottomFilter(true);
+  };
+  //BOTTOM DETAIL
+  const [bottomDetail, setBottomDetail] = useRecoilState(isBottomDetail);
+  const openDetail = () => {
+    setBottomDetail(true);
+  };
   //logout
   const [isLogin, setIsLogin] = useRecoilState(isLogined);
   const signOut = async () => {
@@ -68,61 +81,64 @@ export default function Feed() {
   const [project, setProject] = useRecoilState(projectString);
   const [sns, setSns] = useRecoilState(snstString);
   console.log(chain);
-  // console.log(NftData.data[1].nft);
-  // console.log(NftData.data[1]._id);s
   //RETURN
   return (
     <HomeContainer>
       {isLoadingNft ? null : (
-        <SafeAreaView>
-          <TouchableOpacity onPress={signOut}>
-            <Text>sign out</Text>
-          </TouchableOpacity>
+        <HomeContainer>
+          <SafeAreaView>
+            <TouchableOpacity onPress={signOut}>
+              <Text>sign out</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openFilter}>
+              <Text>Filter</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openDetail}>
+              <Text>Detail</Text>
+            </TouchableOpacity>
+            {/* picker */}
+            <Picker
+              selectedValue={chain}
+              onValueChange={(itemValue, itemIndex) => setChain(itemValue)}
+            >
+              <Picker.Item label="ALL" value="" />
+              <Picker.Item label="ETH" value="ETH" />
+              <Picker.Item label="SOL" value="SOL" />
+              <Picker.Item label="KLAY" value="KLAY" />
+            </Picker>
+            <Picker
+              selectedValue={sns}
+              onValueChange={(itemValue, itemIndex) => setSns(itemValue)}
+            >
+              <Picker.Item label="ALL" value="" />
+              <Picker.Item label="twitter" value="twitter" />
+              <Picker.Item label="discord" value="discord" />
+            </Picker>
+            {/* picker */}
 
-          {/* picker */}
-          <Picker
-            selectedValue={chain}
-            onValueChange={(itemValue, itemIndex) => setChain(itemValue)}
-          >
-            <Picker.Item label="ALL" value="" />
-            <Picker.Item label="ETH" value="ETH" />
-            <Picker.Item label="SOL" value="SOL" />
-            <Picker.Item label="KLAY" value="KLAY" />
-          </Picker>
-          <Picker
-            selectedValue={sns}
-            onValueChange={(itemValue, itemIndex) => setSns(itemValue)}
-          >
-            <Picker.Item label="ALL" value="" />
-            <Picker.Item label="twitter" value="twitter" />
-            <Picker.Item label="discord" value="discord" />
-          </Picker>
-          {/* picker */}
-
-          <NFTList
-            data={NftData.data}
-            keyExtractor={(item) => item._id}
-            // keyExtractor={(item) => {
-            //   console.log(item._id);
-            // }}
-            // renderItem={renderItem}
-            renderItem={({ item }) => (
-              <FeedData
-                // nftData={NftData}
-                nftData={NftData}
-                // _id={item._id}
-                // createdAt={item.createdAt}
-                // nft={item.nft}
-                // thumbnail={item.thumbnail}
-                // fullData={item}
-              ></FeedData>
-            )}
-          />
-
-          <View></View>
-          {/* Bottom Sheet */}
-          <BottomFilter />
-        </SafeAreaView>
+            <NFTList
+              data={NftData.data}
+              keyExtractor={(item) => item._id}
+              // keyExtractor={(item) => {
+              //   console.log(item._id);
+              // }}
+              // renderItem={renderItem}
+              renderItem={({ item }) => (
+                <FeedData
+                  // nftData={NftData}
+                  nftData={NftData}
+                  // _id={item._id}
+                  // createdAt={item.createdAt}
+                  // nft={item.nft}
+                  // thumbnail={item.thumbnail}
+                  // fullData={item}
+                ></FeedData>
+              )}
+            />
+            {/* Bottom Sheet */}
+            <BottomFilter />
+          </SafeAreaView>
+        </HomeContainer>
       )}
     </HomeContainer>
   );
