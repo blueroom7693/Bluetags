@@ -106,14 +106,15 @@ function FeedData({ nftData }: IProps, { _id }: IData) {
   useEffect(() => {
     setData(Object.values(nftData?.data).filter(filter));
   }, [chain, project, sns, today, past, subscribe, nftData]);
+  // console.log(data[1]);
 
   //RETURN
   return (
     <TouchableOpacity onPress={goToDetail}>
       <HeaderText>hi</HeaderText>
-      {data.map((info, index) => (
+      {/* {data.map((info, index) => (
         <HeaderText>{info.nft}</HeaderText>
-      ))}
+      ))} */}
     </TouchableOpacity>
   );
 }

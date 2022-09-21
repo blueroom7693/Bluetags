@@ -10,18 +10,21 @@ import {
   View,
 } from "react-native";
 import styled from "styled-components/native";
-import { getAllNft, IData } from "../axios";
+import { getAllNft } from "../axios";
 import { useQuery } from "@tanstack/react-query";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { logUserOut } from "../async";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   chainString,
   isBottomDetail,
   isBottomFilter,
   isLogined,
+  pastString,
   projectString,
   snstString,
+  subscirbeProject,
+  todayString,
 } from "../atom";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
@@ -31,7 +34,33 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import BottomFilter from "../components/bottomsheet/BottomFilter";
 import { BLACK_COLOR } from "../colors";
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from "@gorhom/bottom-sheet";
+import SquareCard from "../components/card/SquareCard";
 
+//INTERFACE
+interface HMediaProps {
+  _id: string;
+  createdAt: string;
+  nft: string;
+  thumbnail: string;
+  fullData: any;
+}
+interface IProps {
+  nftData: IInfo;
+}
+interface IData {
+  _id: string;
+  chain: string;
+  nft: string;
+  title: string;
+  thumbnail: string;
+  description: string;
+  createdAt: string;
+  likes: [string];
+  unlikes: [string];
+  SNS: string;
+}
+
+////////////////////
 export interface IInfo {
   data: IData;
 }
@@ -54,7 +83,7 @@ const Sample = styled.Text`
 `;
 const NFTList = styled.FlatList`
   flex: 2;
-  background-color: black;
+  background-color: white;
 `;
 const HeaderScroll = styled.ScrollView`
   flex-direction: row;
@@ -101,11 +130,72 @@ export default function Feed() {
     ["homeInfo"],
     getAllNft
   );
-  //selector
-  const [chain, setChain] = useRecoilState(chainString);
-  const [project, setProject] = useRecoilState(projectString);
-  const [sns, setSns] = useRecoilState(snstString);
-  console.log(chain);
+
+  //////////////////////////////////////////////////////////////////////////////////////////
+
+  //recoil value
+  const chain = useRecoilValue(chainString);
+  const project = useRecoilValue(projectString);
+  const sns = useRecoilValue(snstString);
+  const today = useRecoilValue(todayString);
+  const past = useRecoilValue(pastString);
+  const subscribe = useRecoilValue(subscirbeProject);
+  //recoil state
+
+  //filter
+  const filter = (info: IData) => {
+    let chainBool: boolean = true;
+    let projectBool: boolean = true;
+    let snsBool: boolean = true;
+    let dateBool: boolean = true;
+    let subscribeBool: boolean = true;
+    const date = new Date(Date.parse(info.createdAt)).getTime();
+    if (chain !== "") {
+      chainBool = info.chain === chain.toUpperCase();
+    }
+    if (project !== "") {
+      projectBool =
+        info.nft ===
+        project
+          .replaceAll(" ", "")
+          .replaceAll("-", "")
+          .replaceAll("`", "")
+          .toLowerCase();
+    }
+    if (sns !== "") {
+      snsBool = info.SNS === sns;
+    }
+    if (today.getTime() - date < 0 || date - past.getTime() < 0) {
+      dateBool = false;
+    }
+    if (subscribe.length !== 0) {
+      subscribeBool = subscribe.includes(
+        info.nft
+          .replaceAll(" ", "")
+          .replaceAll("-", "")
+          .replaceAll("`", "")
+          .toLowerCase()
+      );
+    }
+    return chainBool && projectBool && snsBool && dateBool && subscribeBool;
+  };
+  //SETDATA
+  // const [data, setData] = useState<IData[]>(Object.values(NftData?.data));
+  const [data, setData] = useState<IData[]>();
+
+  useEffect(() => {
+    if (!isLoadingNft) {
+      setData(Object.values(NftData.data));
+    }
+  }, [isLoadingNft, NftData]);
+
+  useEffect(() => {
+    if (!isLoadingNft) {
+      setData(Object.values(NftData?.data).filter(filter));
+    }
+  }, [chain, project, sns, today, past, subscribe, NftData]);
+  // console.log(data[1]._id);
+  //////////////////////////////////////////////////////////////////////////////////////////
   //RETURN
   return isLoadingNft ? null : (
     <SafeAreaView style={styles.container}>
@@ -138,28 +228,8 @@ export default function Feed() {
       {/* <TouchableOpacity onPress={signOut}>
         <Text>sign out</Text>
       </TouchableOpacity> */}
-
-      {/* picker */}
-      <Picker
-        selectedValue={chain}
-        onValueChange={(itemValue, itemIndex) => setChain(itemValue)}
-      >
-        <Picker.Item label="ALL" value="" />
-        <Picker.Item label="ETH" value="ETH" />
-        <Picker.Item label="SOL" value="SOL" />
-        <Picker.Item label="KLAY" value="KLAY" />
-      </Picker>
-      <Picker
-        selectedValue={sns}
-        onValueChange={(itemValue, itemIndex) => setSns(itemValue)}
-      >
-        <Picker.Item label="ALL" value="" />
-        <Picker.Item label="twitter" value="twitter" />
-        <Picker.Item label="discord" value="discord" />
-      </Picker>
-      {/* picker */}
-
-      <NFTList
+      {/* FLATLIST */}
+      {/* <NFTList
         data={NftData.data}
         keyExtractor={(item) => item._id}
         // keyExtractor={(item) => {
@@ -170,12 +240,28 @@ export default function Feed() {
           <FeedData
             // nftData={NftData}
             nftData={NftData}
+            _id={item._id}
+            createdAt={item.createdAt}
+            nft={item.nft}
+            thumbnail={item.thumbnail}
+            fullData={item}
+          ></FeedData>
+        )}
+      /> */}
+      <NFTList
+        data={data}
+        keyExtractor={(item) => item._id}
+        // renderItem={renderItem}
+        renderItem={({ item }) => (
+          <SquareCard
+            // nftData={NftData}
+            // nftData={NftData}
             // _id={item._id}
             // createdAt={item.createdAt}
-            // nft={item.nft}
+            nft={item.nft}
             // thumbnail={item.thumbnail}
-            // fullData={item}
-          ></FeedData>
+            fullData={item}
+          ></SquareCard>
         )}
       />
       {/* Bottom Sheet */}
@@ -194,5 +280,11 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "500",
     color: "white",
+  },
+  picker: {
+    backgroundColor: "grey",
+    alignItems: "center",
+    borderWidth: 5,
+    borderColor: "black",
   },
 });

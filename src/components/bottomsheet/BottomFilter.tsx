@@ -5,10 +5,16 @@ import BottomSheet, {
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { isBottomFilter } from "../../atom";
+import {
+  chainString,
+  isBottomFilter,
+  projectString,
+  snstString,
+} from "../../atom";
 import styled from "styled-components/native";
 import CustomBackground from "../custom/CustomBackground";
 import { Entypo } from "@expo/vector-icons";
+import { Picker } from "@react-native-picker/picker";
 
 const BottomFilter = () => {
   // hooks
@@ -17,6 +23,12 @@ const BottomFilter = () => {
   const snapPoints = ["80%"];
   //ISOPEN RECOIL
   const [isOpen, setIsOpen] = useRecoilState(isBottomFilter);
+  //FILTER RECOIL
+  //selector
+  const [chain, setChain] = useRecoilState(chainString);
+  const [project, setProject] = useRecoilState(projectString);
+  const [sns, setSns] = useRecoilState(snstString);
+  console.log(chain);
   //CSS
   const BottomContainerText = styled.Text`
     color: white;
@@ -48,6 +60,25 @@ const BottomFilter = () => {
         <BottomContainerText>hello</BottomContainerText>
         <BottomContainerText>hello</BottomContainerText>
         <BottomContainerText>hello</BottomContainerText>
+        {/* picker */}
+        <Picker
+          selectedValue={chain}
+          onValueChange={(itemValue, itemIndex) => setChain(itemValue)}
+        >
+          <Picker.Item label="ALL" value="" />
+          <Picker.Item label="ETH" value="ETH" />
+          <Picker.Item label="SOL" value="SOL" />
+          <Picker.Item label="KLAY" value="KLAY" />
+        </Picker>
+        <Picker
+          selectedValue={sns}
+          onValueChange={(itemValue, itemIndex) => setSns(itemValue)}
+        >
+          <Picker.Item label="ALL" value="" />
+          <Picker.Item label="twitter" value="twitter" />
+          <Picker.Item label="discord" value="discord" />
+        </Picker>
+        {/* picker */}
       </BottomSheetView>
     </BottomSheet>
   ) : null;
