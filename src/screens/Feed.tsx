@@ -104,6 +104,9 @@ const FilterText = styled.Text`
   color: white;
   font-size: 12px;
 `;
+export const HListSeparator = styled.View`
+  width: 20px;
+`;
 
 // main
 export default function Feed() {
@@ -248,18 +251,23 @@ export default function Feed() {
           ></FeedData>
         )}
       /> */}
+      <Text>Recommended Project</Text>
+
+      <Text>Recommended Article</Text>
       <NFTList
         data={data}
         keyExtractor={(item) => item._id}
-        // renderItem={renderItem}
+        horizontal={true}
+        ItemSeparatorComponent={HListSeparator}
         renderItem={({ item }) => (
           <SquareCard
-            // nftData={NftData}
-            // nftData={NftData}
             // _id={item._id}
-            // createdAt={item.createdAt}
+            createdAt={item.createdAt}
             nft={item.nft}
-            // thumbnail={item.thumbnail}
+            thumbnail={item.thumbnail}
+            title={item.title}
+            chain={item.chain}
+            SNS={item.SNS}
             fullData={item}
           ></SquareCard>
         )}
