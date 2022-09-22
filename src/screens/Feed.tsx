@@ -266,7 +266,7 @@ export default function Feed() {
           contentContainerStyle={{ paddingHorizontal: 20 }}
           renderItem={({ item }) => (
             <CircleCard
-              fulldata={item}
+              fullData={item}
               chain={item.chain}
               title={item.title}
               logo={item.logourl}

@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { Text, TouchableOpacity } from "react-native";
-import { AllNft } from "../../AllNft";
 
 interface ICircleProject {
   fullData: any;
