@@ -1,13 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect } from "react";
-import {
-  Dimensions,
-  StyleSheet,
-  Share,
-  Platform,
-  View,
-  Text,
-} from "react-native";
+import { Text } from "react-native";
 import styled from "styled-components/native";
 
 const Container = styled.ScrollView`
@@ -19,7 +12,9 @@ const Container = styled.ScrollView`
 `;
 
 const Detail = ({ navigation: { setOptions }, route: { params } }) => {
-  const id = params._id;
+  // console.log(Object.values(params));
+  console.log(params);
+  const id = params.title;
   return (
     <Container>
       <Text>하이루 {id}</Text>

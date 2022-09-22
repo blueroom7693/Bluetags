@@ -13,25 +13,22 @@ interface ISquareCard {
   thumbnail: string;
   description: string;
   createdAt: string;
-  //   likes: [string];
-  //   unlikes: [string];
   SNS: string;
-  //   _id: string;
 }
 //CSS
 const Container = styled.View`
   background-color: black;
   width: 190px;
   border-width: 1px;
-  border-color: grey;
   text-align: left;
   justify-content: center;
   font-size: 40px;
+  color: black;
+  margin-top: 20px;
 `;
 const TimeContaier = styled.View`
   flex-direction: row;
   justify-content: flex-end;
-  /* justify-content: right; */
 `;
 const Thumbnail = styled.Image`
   width: 190px;
@@ -58,7 +55,6 @@ const CreatedAt = styled.Text`
   font-size: 12px;
   margin-right: 0px;
   color: white;
-  /* text-align: right; */
 `;
 const BlueTags = styled.Text`
   font-size: 12px;
@@ -118,8 +114,8 @@ const SquareCard: React.FC<ISquareCard> = ({
         <Thumbnail source={{ uri: thumbnail }}></Thumbnail>
         <BlueTags>#SAMPLE</BlueTags>
         <ArticleTitle>
-          {title.slice(0, 30)}
-          {title.length > 30 ? "..." : null}
+          {title.slice(0, 35)}
+          {title.length > 35 ? "..." : null}
         </ArticleTitle>
       </Container>
     </TouchableOpacity>

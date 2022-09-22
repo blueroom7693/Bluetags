@@ -88,6 +88,37 @@ const Tabs = () => {
               size={30}
             />
           ),
+          headerRight: ({ color, size }) => (
+            <HeaderRight>
+              <MaterialIcons name={"home-filled"} color={"white"} size={30} />
+              <Ionicons
+                name="search"
+                color={"white"}
+                size={30}
+                onPress={() =>
+                  navigation.navigate("Stack", {
+                    screen: "Search",
+                    params: {
+                      // ...fullData,
+                    },
+                  })
+                }
+              />
+              <Ionicons
+                name={"person"}
+                color={"white"}
+                size={30}
+                onPress={() =>
+                  navigation.navigate("Stack", {
+                    screen: "Profile",
+                    params: {
+                      // ...fullData,
+                    },
+                  })
+                }
+              />
+            </HeaderRight>
+          ),
         })}
       />
       <Tab.Screen

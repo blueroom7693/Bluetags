@@ -35,6 +35,8 @@ import BottomFilter from "../components/bottomsheet/BottomFilter";
 import { BLACK_COLOR } from "../colors";
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from "@gorhom/bottom-sheet";
 import SquareCard from "../components/card/SquareCard";
+import { AllNftNonChain } from "../AllNft";
+import CircleCard from "../components/card/CircleCard";
 
 //INTERFACE
 interface HMediaProps {
@@ -65,25 +67,18 @@ export interface IInfo {
   data: IData;
 }
 
-const HomeContainer = styled.View`
+const HomeContainer = styled.ScrollView`
   display: flex;
   flex: 1;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  width: 100%;
-  /* height: auto;
-  width: 100vw; */
-  /* font-family: "Open Sans";
-  padding-top: 200px; */
+  background-color: black;
 `;
 const Sample = styled.Text`
   color: white;
 `;
 const NFTList = styled.FlatList`
   flex: 2;
-  background-color: white;
+  background-color: black;
 `;
 const HeaderScroll = styled.ScrollView`
   flex-direction: row;
@@ -106,14 +101,26 @@ const FilterText = styled.Text`
 `;
 export const HListSeparator = styled.View`
   width: 20px;
+  background-color: black;
 `;
 const HeaderTitle = styled.Text`
-  font-size: 36px;
+  font-size: 24px;
   color: white;
+  margin-left: 30px;
+  font-weight: 800;
+`;
+const SubHeaderTitle = styled.Text`
+  font-size: 18px;
+  color: grey;
+  margin-left: 30px;
+  margin-bottom: -8px;
+  margin-top: 35px;
 `;
 
 // main
 export default function Feed() {
+  //AllNftNonChain
+  const AllNft = Object.values(AllNftNonChain);
   //BOTTOM FILTER
   const [bottomFilter, setBottomFilter] = useRecoilState(isBottomFilter);
   const openFilter = () => {
@@ -137,9 +144,6 @@ export default function Feed() {
     ["homeInfo"],
     getAllNft
   );
-
-  //////////////////////////////////////////////////////////////////////////////////////////
-
   //recoil value
   const chain = useRecoilValue(chainString);
   const project = useRecoilValue(projectString);
@@ -147,8 +151,6 @@ export default function Feed() {
   const today = useRecoilValue(todayString);
   const past = useRecoilValue(pastString);
   const subscribe = useRecoilValue(subscirbeProject);
-  //recoil state
-
   //filter
   const filter = (info: IData) => {
     let chainBool: boolean = true;
@@ -187,7 +189,6 @@ export default function Feed() {
     return chainBool && projectBool && snsBool && dateBool && subscribeBool;
   };
   //SETDATA
-  // const [data, setData] = useState<IData[]>(Object.values(NftData?.data));
   const [data, setData] = useState<IData[]>();
 
   useEffect(() => {
@@ -201,83 +202,100 @@ export default function Feed() {
       setData(Object.values(NftData?.data).filter(filter));
     }
   }, [chain, project, sns, today, past, subscribe, NftData]);
-  // console.log(data[1]._id);
-  //////////////////////////////////////////////////////////////////////////////////////////
   //RETURN
   return isLoadingNft ? null : (
     <SafeAreaView style={styles.container}>
-      <HeaderScroll horizontal={true} showsHorizontalScrollIndicator={false}>
-        <Filterbox onPress={openFilter}>
-          <FilterText>Filter</FilterText>
-        </Filterbox>
-        <Filterbox onPress={openDetail}>
-          <FilterText>Detail</FilterText>
-        </Filterbox>
-        <Filterbox>
-          <FilterText>#event</FilterText>
-        </Filterbox>
-        <Filterbox>
-          <FilterText>#announcement</FilterText>
-        </Filterbox>
-        <Filterbox>
-          <FilterText>#voting</FilterText>
-        </Filterbox>
-        <Filterbox>
-          <FilterText>#minting</FilterText>
-        </Filterbox>
-        <Filterbox>
-          <FilterText>#off-line</FilterText>
-        </Filterbox>
-        <Filterbox>
-          <FilterText>#proposal</FilterText>
-        </Filterbox>
-      </HeaderScroll>
-      {/* <TouchableOpacity onPress={signOut}>
-        <Text>sign out</Text>
-      </TouchableOpacity> */}
-      {/* FLATLIST */}
-      {/* <NFTList
-        data={NftData.data}
-        keyExtractor={(item) => item._id}
-        // keyExtractor={(item) => {
-        //   console.log(item._id);
-        // }}
-        // renderItem={renderItem}
-        renderItem={({ item }) => (
-          <FeedData
-            // nftData={NftData}
-            nftData={NftData}
-            _id={item._id}
-            createdAt={item.createdAt}
-            nft={item.nft}
-            thumbnail={item.thumbnail}
-            fullData={item}
-          ></FeedData>
-        )}
-      /> */}
-      <HeaderTitle>Recommended Project</HeaderTitle>
-
-      <HeaderTitle>Recommended Article</HeaderTitle>
-      <NFTList
-        data={data}
-        keyExtractor={(item) => item._id}
-        horizontal={true}
-        ItemSeparatorComponent={HListSeparator}
-        renderItem={({ item }) => (
-          <SquareCard
-            // _id={item._id}
-            createdAt={item.createdAt}
-            nft={item.nft}
-            thumbnail={item.thumbnail}
-            title={item.title}
-            chain={item.chain}
-            SNS={item.SNS}
-            fullData={item}
-          ></SquareCard>
-        )}
-      />
-      {/* Bottom Sheet */}
-      <Text>hi</Text>
+      <HomeContainer>
+        {/* HEADER */}
+        <HeaderScroll horizontal={true} showsHorizontalScrollIndicator={false}>
+          <Filterbox onPress={openFilter}>
+            <FilterText>Filter</FilterText>
+          </Filterbox>
+          <Filterbox onPress={openDetail}>
+            <FilterText>Detail</FilterText>
+          </Filterbox>
+          <Filterbox>
+            <FilterText>#event</FilterText>
+          </Filterbox>
+          <Filterbox>
+            <FilterText>#announcement</FilterText>
+          </Filterbox>
+          <Filterbox>
+            <FilterText>#voting</FilterText>
+          </Filterbox>
+          <Filterbox>
+            <FilterText>#minting</FilterText>
+          </Filterbox>
+          <Filterbox>
+            <FilterText>#off-line</FilterText>
+          </Filterbox>
+          <Filterbox>
+            <FilterText>#proposal</FilterText>
+          </Filterbox>
+        </HeaderScroll>
+        {/* RECOMMEDED ARTICLE FLATLIST */}
+        <SubHeaderTitle>start with tags</SubHeaderTitle>
+        <HeaderTitle>Recommended Article</HeaderTitle>
+        <NFTList
+          data={data}
+          keyExtractor={(item) => item._id}
+          horizontal={true}
+          ItemSeparatorComponent={HListSeparator}
+          contentContainerStyle={{ paddingHorizontal: 20 }}
+          renderItem={({ item }) => (
+            <SquareCard
+              // _id={item._id}
+              createdAt={item.createdAt}
+              nft={item.nft}
+              thumbnail={item.thumbnail}
+              title={item.title}
+              chain={item.chain}
+              SNS={item.SNS}
+              fullData={item}
+            ></SquareCard>
+          )}
+        />
+        {/* RECOMMEDED PROJECT FLATLIST */}
+        <SubHeaderTitle>for you</SubHeaderTitle>
+        <HeaderTitle>Recommended Project</HeaderTitle>
+        <NFTList
+          data={AllNft}
+          keyExtractor={(item) => item.title}
+          horizontal={true}
+          ItemSeparatorComponent={HListSeparator}
+          contentContainerStyle={{ paddingHorizontal: 20 }}
+          renderItem={({ item }) => (
+            <CircleCard
+              fulldata={item}
+              chain={item.chain}
+              title={item.title}
+              logo={item.logourl}
+            ></CircleCard>
+          )}
+        />
+        {/* RECOMMEDED ARTICLE FLATLIST */}
+        <SubHeaderTitle>start with tags</SubHeaderTitle>
+        <HeaderTitle>Recommended Article</HeaderTitle>
+        <NFTList
+          data={data}
+          keyExtractor={(item) => item._id}
+          horizontal={true}
+          ItemSeparatorComponent={HListSeparator}
+          contentContainerStyle={{ paddingHorizontal: 20 }}
+          renderItem={({ item }) => (
+            <SquareCard
+              // _id={item._id}
+              createdAt={item.createdAt}
+              nft={item.nft}
+              thumbnail={item.thumbnail}
+              title={item.title}
+              chain={item.chain}
+              SNS={item.SNS}
+              fullData={item}
+            ></SquareCard>
+          )}
+        />
+      </HomeContainer>
       <BottomFilter />
     </SafeAreaView>
   );
