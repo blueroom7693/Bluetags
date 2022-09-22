@@ -107,6 +107,10 @@ const FilterText = styled.Text`
 export const HListSeparator = styled.View`
   width: 20px;
 `;
+const HeaderTitle = styled.Text`
+  font-size: 36px;
+  color: white;
+`;
 
 // main
 export default function Feed() {
@@ -251,9 +255,9 @@ export default function Feed() {
           ></FeedData>
         )}
       /> */}
-      <Text>Recommended Project</Text>
+      <HeaderTitle>Recommended Project</HeaderTitle>
 
-      <Text>Recommended Article</Text>
+      <HeaderTitle>Recommended Article</HeaderTitle>
       <NFTList
         data={data}
         keyExtractor={(item) => item._id}
