@@ -75,7 +75,11 @@ const SnsImage = styled.Image`
 //MAIN
 const Detail = ({ navigation: { setOptions }, route: { params } }) => {
   //GETDATA
-  const search = params.title.trim().toLowerCase();
+  const search = params.title
+    .toLowerCase()
+    .replace(/ /gi, "")
+    .replace(/-/gi, "")
+    .replace(/`/gi, "");
   const { isLoading: isLoadingNft, data: searchedData } = useQuery<IInfo>(
     ["searchedData"],
     () => getNftInfo(search)
