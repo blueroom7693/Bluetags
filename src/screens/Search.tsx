@@ -3,9 +3,10 @@ import React, { useState } from "react";
 import { Alert, Text } from "react-native";
 import styled from "styled-components/native";
 import { getSearch } from "../axios";
+import SmallHCard from "../components/card/SmallHCard";
 import Loader from "../components/Loader";
 
-const Container = styled.ScrollView``;
+const Container = styled.FlatList``;
 
 const SearchBar = styled.TextInput`
   background-color: white;
@@ -25,8 +26,8 @@ const Search = () => {
     if (query === "") {
       return;
     }
-    console.log("serched");
-    console.log(searchedNft?.data);
+    // console.log(searchedNft?.data[1]._id);
+    console.log(searchedNft);
   };
   //usequery
   const {
@@ -36,19 +37,38 @@ const Search = () => {
   } = useQuery(["Searched"], () => getSearch(query));
 
   return (
-    <Container>
-      <SearchBar
-        placeholder="Search for NFT Project"
-        placeholderTextColor="grey"
-        returnKeyType="search"
-        onChangeText={onChangeText}
-        onSubmitEditing={onSubmit}
-      />
-      {searchedNft ? (
-        // <HList title="Movie Results" data={searchedNft.results} />
-        <Text>hi</Text>
-      ) : null}
-    </Container>
+    <Container
+      ListHeaderComponent={
+        <>
+          <SearchBar
+            placeholder="Search for NFT Project"
+            placeholderTextColor="grey"
+            returnKeyType="search"
+            onChangeText={onChangeText}
+            onSubmitEditing={onSubmit}
+          />
+        </>
+      }
+      data={searchedNft}
+      keyExtractor={(item) => item._id}
+      renderItem={({ item }) => (
+        <SmallHCard
+          createdAt={item.createdAt}
+          nft={item.nft}
+          thumbnail={item.thumbnail}
+          title={item.title}
+          chain={item.chain}
+          SNS={item.SNS}
+          fullData={item}
+        ></SmallHCard>
+
+        // {searchedNft ? (
+        //   // <HList title="Movie Results" data={searchedNft.results} />
+        //   <Text>hi</Text>
+        // ) : null}
+      )}
+    />
   );
 };
+
 export default Search;
