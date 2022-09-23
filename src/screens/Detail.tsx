@@ -38,11 +38,12 @@ interface IData {
 }
 //CSS
 const Container = styled.FlatList`
+  background-color: black;
   display: flex;
+  flex: 1;
 `;
 // const Container = styled.ScrollView`
-//   display: flex;
-//   flex: 1;
+
 //   flex-direction: column;
 //   background-color: #000000;
 // `;
