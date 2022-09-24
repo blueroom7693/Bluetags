@@ -167,10 +167,10 @@ export default function Feed() {
       projectBool =
         info.nft ===
         project
-          .replaceAll(" ", "")
-          .replaceAll("-", "")
-          .replaceAll("`", "")
-          .toLowerCase();
+          .toLowerCase()
+          .replace(/ /gi, "")
+          .replace(/-/gi, "")
+          .replace(/`/gi, "");
     }
     if (sns !== "") {
       snsBool = info.SNS === sns;
@@ -181,10 +181,10 @@ export default function Feed() {
     if (subscribe.length !== 0) {
       subscribeBool = subscribe.includes(
         info.nft
-          .replaceAll(" ", "")
-          .replaceAll("-", "")
-          .replaceAll("`", "")
           .toLowerCase()
+          .replace(/ /gi, "")
+          .replace(/-/gi, "")
+          .replace(/`/gi, "")
       );
     }
     return chainBool && projectBool && snsBool && dateBool && subscribeBool;
@@ -223,7 +223,6 @@ export default function Feed() {
           contentContainerStyle={{ paddingHorizontal: 20 }}
           renderItem={({ item }) => (
             <SquareCard
-              // _id={item._id}
               createdAt={item.createdAt}
               nft={item.nft}
               thumbnail={item.thumbnail}

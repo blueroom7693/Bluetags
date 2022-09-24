@@ -64,7 +64,7 @@ const BottomFilter = () => {
         <Picker
           selectedValue={chain}
           onValueChange={(itemValue, itemIndex) => setChain(itemValue)}
-          style={styles.container}
+          style={styles.picker}
         >
           <Picker.Item label="ALL" value="" />
           <Picker.Item label="ETH" value="ETH" />
@@ -91,10 +91,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#3d3d3d",
   },
   picker: {
-    backgroundColor: "white",
-    flex: 0.1,
-    borderTopWidth: 2,
-    borderTopColor: "white",
+    height: 20,
+    width: 100,
+    backgroundColor: "grey",
+    borderWidth: 50,
+    borderColor: "white",
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 100,
   },
 });
 

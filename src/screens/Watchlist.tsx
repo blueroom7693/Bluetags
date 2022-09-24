@@ -48,6 +48,7 @@ const Watchlist = () => {
   console.log(isDark);
   //TOKEN
   const userToken = useRecoilValue(token);
+  console.log(userToken);
 
   //QUERY
   // const { isLoading: isLoadingNft, data: NftData } = useQuery(
@@ -56,19 +57,18 @@ const Watchlist = () => {
   // );
 
   //AXIOS
-  // axiosInstance
-  //   .get<IUser>(`/api/v1/user/favorite`, {
-  //     headers: {
-  //       Authorization: `Bearer ${userToken["token"]}`,
-  //     },
-  //   })
-  //   .then((response) => setSubscribeData(Object.values(response.data)));
-  // console.log(subscribeData);
-  // console.log(userToken);
-  // useEffect(() => {
-  //   const DATA = getUser(userToken);
-  //   console.log(DATA);
-  // }, []);
+
+  useEffect(() => {
+    axiosInstance
+      .get<IUser>(`/api/v1/user/favorite`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
+      .then((response) => setSubscribeData(Object.values(response.data)));
+  }, []);
+
+  console.log(subscribeData);
 
   return (
     <SafeAreaView style={styles.container}>

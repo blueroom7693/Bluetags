@@ -5,6 +5,7 @@ import { Text, TouchableOpacity, useColorScheme } from "react-native";
 import Detail from "../screens/Detail";
 import Profile from "../screens/Profile";
 import Search from "../screens/Search";
+import DetailArticle from "../screens/DetailArticle";
 
 const NativeStack = createNativeStackNavigator();
 
@@ -24,6 +25,8 @@ const Stack = () => {
       }}
     >
       <NativeStack.Screen name="Detail" component={Detail} />
+      <NativeStack.Screen name="DetailArticle" component={DetailArticle} />
+
       <NativeStack.Screen name="Profile" component={Profile} />
       <NativeStack.Screen
         name="Search"

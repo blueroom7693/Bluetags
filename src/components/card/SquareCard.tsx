@@ -81,7 +81,7 @@ const SquareCard: React.FC<ISquareCard> = ({
   const goToDetail = () => {
     //@ts-ignore
     navigation.navigate("Stack", {
-      screen: "Detail",
+      screen: "DetailArticle",
       params: {
         ...fullData,
       },
