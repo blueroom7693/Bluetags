@@ -43,15 +43,11 @@ const Tabs = () => {
       }}
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: isDark ? LIGHT_GREY : LIGHT_GREY,
+          backgroundColor: isDark ? LIGHT_GREY : "black",
           height: 50,
           position: "absolute",
-          // bottom: 16,
-          // left: 16,
-          // right: 16,
-          // borderRadius: 16,
-          borderColor: BLACK_COLOR,
-          borderWidth: 2,
+          borderTopWidth: 1,
+          borderTopColor: LIGHT_GREY,
           display: isTabBar ? "none" : "flex",
         },
         tabBarActiveTintColor: isDark ? YELLOW_COLOR : BLUE,
@@ -75,16 +71,16 @@ const Tabs = () => {
         name="trending"
         component={Feed}
         options={({ navigation, route }) => ({
-          headerLeft: () => (
-            <DrawerBtnContainer>
-              <Ionicons
-                name="menu"
-                size={24}
-                color="white"
-                onPress={() => navigation.openDrawer()}
-              />
-            </DrawerBtnContainer>
-          ),
+          // headerLeft: () => (
+          //   <DrawerBtnContainer>
+          //     <Ionicons
+          //       name="menu"
+          //       size={24}
+          //       color="white"
+          //       onPress={() => navigation.openDrawer()}
+          //     />
+          //   </DrawerBtnContainer>
+          // ),
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons
               name={"local-fire-department"}
@@ -129,16 +125,6 @@ const Tabs = () => {
         name="Home"
         component={Home}
         options={({ navigation, route }) => ({
-          headerLeft: () => (
-            <DrawerBtnContainer>
-              <Ionicons
-                name="menu"
-                size={32}
-                color="white"
-                onPress={() => navigation.openDrawer()}
-              />
-            </DrawerBtnContainer>
-          ),
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name={"home-filled"} color={color} size={30} />
           ),
@@ -179,18 +165,8 @@ const Tabs = () => {
         name="Watchlist"
         component={Watchlist}
         options={({ navigation, route }) => ({
-          tabBarBadge: 3,
+          tabBarBadge: 2,
           tabBarBadgeStyle: { backgroundColor: "red" },
-          headerLeft: () => (
-            <DrawerBtnContainer>
-              <Ionicons
-                name="menu"
-                size={24}
-                color="white"
-                onPress={() => navigation.openDrawer()}
-              />
-            </DrawerBtnContainer>
-          ),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="star" color={color} size={30} />
           ),

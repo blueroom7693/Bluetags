@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useMemo, useState } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View, Text, Button, Image } from "react-native";
 import BottomSheet, {
   BottomSheetFlatList,
   BottomSheetView,
@@ -20,7 +20,7 @@ const BottomFilter = () => {
   // hooks
   const sheetRef = useRef<BottomSheet>(null);
   // SNAPPOINT
-  const snapPoints = ["80%"];
+  const snapPoints = ["50%"];
   //ISOPEN RECOIL
   const [isOpen, setIsOpen] = useRecoilState(isBottomFilter);
   //FILTER RECOIL
@@ -64,6 +64,7 @@ const BottomFilter = () => {
         <Picker
           selectedValue={chain}
           onValueChange={(itemValue, itemIndex) => setChain(itemValue)}
+          style={styles.container}
         >
           <Picker.Item label="ALL" value="" />
           <Picker.Item label="ETH" value="ETH" />
@@ -88,6 +89,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#3d3d3d",
+  },
+  picker: {
+    backgroundColor: "white",
+    flex: 0.1,
+    borderTopWidth: 2,
+    borderTopColor: "white",
   },
 });
 
