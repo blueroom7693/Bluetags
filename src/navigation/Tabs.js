@@ -19,6 +19,8 @@ import { DrawerActions } from "@react-navigation/native";
 import Home from "../screens/Home";
 import Watchlist from "../screens/Watchlist";
 import Feed from "../screens/Feed";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isBottomFilter } from "../atom";
 DrawerActions;
 
 const DrawerBtnContainer = styled.View`
@@ -33,6 +35,7 @@ const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
   const isDark = useColorScheme() === "dark";
+  const isTabBar = useRecoilValue(isBottomFilter);
   return (
     <Tab.Navigator
       sceneContainerStyle={{
@@ -49,6 +52,7 @@ const Tabs = () => {
           // borderRadius: 16,
           borderColor: BLACK_COLOR,
           borderWidth: 2,
+          display: isTabBar ? "none" : "flex",
         },
         tabBarActiveTintColor: isDark ? YELLOW_COLOR : BLUE,
         tabBarInactiveTintColor: isDark ? DARK_GREY : WHITE,
@@ -189,6 +193,37 @@ const Tabs = () => {
           ),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="star" color={color} size={30} />
+          ),
+          headerRight: ({ color, size }) => (
+            <HeaderRight>
+              <MaterialIcons name={"home-filled"} color={"white"} size={30} />
+              <Ionicons
+                name="search"
+                color={"white"}
+                size={30}
+                onPress={() =>
+                  navigation.navigate("Stack", {
+                    screen: "Search",
+                    params: {
+                      // ...fullData,
+                    },
+                  })
+                }
+              />
+              <Ionicons
+                name={"person"}
+                color={"white"}
+                size={30}
+                onPress={() =>
+                  navigation.navigate("Stack", {
+                    screen: "Profile",
+                    params: {
+                      // ...fullData,
+                    },
+                  })
+                }
+              />
+            </HeaderRight>
           ),
         })}
       />

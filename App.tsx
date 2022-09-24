@@ -14,7 +14,7 @@ import MyDrawer from "./src/navigation/Drawer";
 import AuthStack from "./src/navigation/AuthStack";
 import { RecoilRoot, useRecoilState } from "recoil";
 import { useCookies } from "react-cookie";
-import { isLogined } from "./src/atom";
+import { isLogined, token } from "./src/atom";
 import DataProvider from "./src/context/DataProvider";
 import Entypo from "@expo/vector-icons/Entypo";
 import * as SplashScreen from "expo-splash-screen";
@@ -31,6 +31,7 @@ export interface IInfo {
 export default function App() {
   // 쿠키 확인 및 로그인 토큰
   const [isLogin, setIsLogin] = useRecoilState(isLogined);
+  const [userToken, setUserToken] = useRecoilState(token);
   // splash screen
   const [appIsReady, setAppIsReady] = useState(false);
 
@@ -43,6 +44,7 @@ export default function App() {
         if (token !== (undefined || null)) {
           console.log(token);
           setIsLogin(true);
+          setUserToken(token);
           //데이터 한번에 받아오기
           //query
           // const { isLoading: isLoadingNft, data: NftData } = useQuery<IInfo>(
@@ -51,7 +53,6 @@ export default function App() {
           // );
           // console.log(NftData);
         }
-        // await new Promise((resolve) => setTimeout(resolve, 100));
       } catch (e) {
         console.warn(e);
       } finally {
@@ -61,15 +62,6 @@ export default function App() {
     prepare();
     SplashScreen.hideAsync();
   }, [isLogin]);
-  // const onLayoutRootView = useCallback(async () => {
-  //   if (appIsReady) {
-  //     await SplashScreen.hideAsync();
-  //   }
-  // }, [appIsReady]);
-
-  // if (!appIsReady) {
-  //   return null;
-  // }
 
   // QUERY CLIENT
   const queryClient = new QueryClient();

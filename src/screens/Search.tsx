@@ -55,7 +55,6 @@ const Search = ({ navigation }) => {
       return;
     }
     searchNFT();
-    console.log(searchedNft);
   };
 
   return isLoading ? (

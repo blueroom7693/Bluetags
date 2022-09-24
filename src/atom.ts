@@ -1,6 +1,11 @@
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
 
+export const token = atom({
+  key: "token",
+  default: "",
+});
+
 export const isBottomFilter = atom({
   key: "isbottomFilter",
   default: false,

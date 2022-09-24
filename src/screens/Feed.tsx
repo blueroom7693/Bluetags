@@ -37,6 +37,7 @@ import { WINDOW_HEIGHT, WINDOW_WIDTH } from "@gorhom/bottom-sheet";
 import SquareCard from "../components/card/SquareCard";
 import { AllNftNonChain } from "../AllNft";
 import CircleCard from "../components/card/CircleCard";
+import HeaderScroller from "../components/HeaderScroller";
 
 //INTERFACE
 interface HMediaProps {
@@ -207,32 +208,10 @@ export default function Feed() {
     <SafeAreaView style={styles.container}>
       <HomeContainer>
         {/* HEADER */}
-        <HeaderScroll horizontal={true} showsHorizontalScrollIndicator={false}>
-          <Filterbox onPress={openFilter}>
-            <FilterText>Filter</FilterText>
-          </Filterbox>
-          <Filterbox onPress={openDetail}>
-            <FilterText>Detail</FilterText>
-          </Filterbox>
-          <Filterbox>
-            <FilterText>#event</FilterText>
-          </Filterbox>
-          <Filterbox>
-            <FilterText>#announcement</FilterText>
-          </Filterbox>
-          <Filterbox>
-            <FilterText>#voting</FilterText>
-          </Filterbox>
-          <Filterbox>
-            <FilterText>#minting</FilterText>
-          </Filterbox>
-          <Filterbox>
-            <FilterText>#off-line</FilterText>
-          </Filterbox>
-          <Filterbox>
-            <FilterText>#proposal</FilterText>
-          </Filterbox>
-        </HeaderScroll>
+        <TouchableOpacity onPress={signOut}>
+          <Text>hi</Text>
+        </TouchableOpacity>
+        <HeaderScroller />
         {/* RECOMMEDED ARTICLE FLATLIST */}
         <SubHeaderTitle>start with tags</SubHeaderTitle>
         <HeaderTitle>Recommended Article</HeaderTitle>

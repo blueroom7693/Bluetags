@@ -207,6 +207,65 @@ const Home = () => {
   );
   return (
     <OverallContainer>
+      <Swiper
+        horizontal
+        loop
+        autoplay
+        autoplayTimeout={3.5}
+        showsButtons={false}
+        showsPagination={false}
+        containerStyle={{
+          marginBottom: 40,
+          width: "100%",
+          height: SCREEN_HEIGHT / 3,
+        }}
+      >
+        <Container>
+          <ImageContainer
+            source={{
+              uri: "https://brutkasten.com/wp-content/uploads/2022/03/apeclub-766x395.jpg",
+            }}
+            resizeMode="cover"
+          ></ImageContainer>
+          <View>
+            <ImageText>BAYC</ImageText>
+          </View>
+        </Container>
+        <Container>
+          <ImageContainer
+            source={{
+              uri: "https://pbs.twimg.com/media/FBb5qQrVgAAWXxJ.jpg",
+            }}
+            resizeMode="cover"
+          ></ImageContainer>
+          <View>
+            <ImageText>JP NFT</ImageText>
+          </View>
+        </Container>
+        <Container>
+          <ImageContainer
+            source={{
+              uri: "https://imageio.forbes.com/specials-images/imageserve/62b48ac1f8ef8bb28e4a638c/4th-Annual-NFT-NYC-Conference/960x0.jpg?format=jpg&width=960",
+            }}
+            resizeMode="cover"
+          ></ImageContainer>
+          <View>
+            <ImageText>NFT NYC</ImageText>
+          </View>
+        </Container>
+
+        {/* {nowPlayingData?.results.map((movie) => (
+          <Slide
+            key={movie.id}
+            backdropPath={movie.backdrop_path || ""}
+            posterPath={movie.poster_path || ""}
+            originalTitle={movie.original_title}
+            voteAverage={movie.vote_average}
+            overview={movie.overview}
+            fullData={movie}
+          />
+        ))} */}
+      </Swiper>
       <Text
         style={{
           fontSize: 25,
