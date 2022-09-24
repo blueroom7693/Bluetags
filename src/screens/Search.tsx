@@ -53,20 +53,20 @@ const Search = () => {
       keyExtractor={(item) => item._id}
       renderItem={({ item }) => (
         <SmallHCard
-          createdAt={item.createdAt}
-          nft={item.nft}
+          // createdAt={item.createdAt}
+          // nft={item.nft}
           thumbnail={item.thumbnail}
           title={item.title}
-          chain={item.chain}
-          SNS={item.SNS}
+          // chain={item.chain}
+          // SNS={item.SNS}
           fullData={item}
         ></SmallHCard>
-
-        // {searchedNft ? (
-        //   // <HList title="Movie Results" data={searchedNft.results} />
-        //   <Text>hi</Text>
-        // ) : null}
       )}
+
+      // {searchedNft ? (
+      //   // <HList title="Movie Results" data={searchedNft.results} />
+      //   <Text>hi</Text>
+      // ) : null}
     />
   );
 };
