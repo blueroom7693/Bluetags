@@ -19,6 +19,9 @@ const Title = styled.Text`
   color: white;
   font-size: 12px;
 `;
+const ListContainer = styled.View`
+  margin-bottom: 40px;
+`;
 const Container = styled.TouchableOpacity`
   background-color: black;
   justify-content: center;
@@ -65,17 +68,16 @@ const SmallHCard: React.FC<ICircleProject> = ({
   //   });
   // };
   return (
-    // <TouchableOpacity>
-    <Container>
-      <ProjectLogo source={{ uri: thumbnail }}></ProjectLogo>
-      <TextContainer>
-        <BlueTags>#SAMPLE #SAMPLE</BlueTags>
-        <Title>{title}</Title>
-      </TextContainer>
-      <AntDesign name="staro" size={24} color="white" />
-      {/* <Follower>Follower</Follower> */}
-    </Container>
-    // </TouchableOpacity>
+    <ListContainer>
+      <Container>
+        <ProjectLogo source={{ uri: thumbnail }}></ProjectLogo>
+        <TextContainer>
+          <BlueTags>#SAMPLE #SAMPLE</BlueTags>
+          <Title>{title}</Title>
+        </TextContainer>
+        <AntDesign name="staro" size={24} color="white" />
+      </Container>
+    </ListContainer>
   );
 };
 

@@ -25,7 +25,11 @@ const Stack = () => {
     >
       <NativeStack.Screen name="Detail" component={Detail} />
       <NativeStack.Screen name="Profile" component={Profile} />
-      <NativeStack.Screen name="Search" component={Search} />
+      <NativeStack.Screen
+        name="Search"
+        component={Search}
+        options={{ headerShown: false }}
+      />
     </NativeStack.Navigator>
   );
 };
