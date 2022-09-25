@@ -225,6 +225,7 @@ const Home = () => {
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ paddingHorizontal: 15 }}
       />
+
       <View style={{ marginBottom: 70 }}></View>
     </OverallContainer>
   );

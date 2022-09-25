@@ -178,16 +178,8 @@ export default function Feed() {
     if (today.getTime() - date < 0 || date - past.getTime() < 0) {
       dateBool = false;
     }
-    if (subscribe.length !== 0) {
-      subscribeBool = subscribe.includes(
-        info.nft
-          .toLowerCase()
-          .replace(/ /gi, "")
-          .replace(/-/gi, "")
-          .replace(/`/gi, "")
-      );
-    }
-    return chainBool && projectBool && snsBool && dateBool && subscribeBool;
+
+    return chainBool && projectBool && snsBool && dateBool;
   };
   //SETDATA
   const [data, setData] = useState<IData[]>();

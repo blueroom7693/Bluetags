@@ -6,7 +6,7 @@
     "assetBundlePatterns": ["**/*"],
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./src/assets/images/splash.png"
+      "image": "./src/assets/images/splash3.png"
     }
   },
   "name": "langApp"
