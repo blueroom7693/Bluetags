@@ -1,9 +1,10 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { AllNft } from "../../AllNft";
 import { color } from "react-native-reanimated";
+import { AntDesign } from "@expo/vector-icons";
 
 //TYPE
 interface ISquareCard {
@@ -19,51 +20,26 @@ interface ISquareCard {
 //CSS
 const Container = styled.View`
   background-color: black;
-  width: 190px;
-  border-width: 1px;
-  text-align: left;
-  justify-content: center;
-  font-size: 40px;
-  color: black;
-  margin-top: 20px;
-`;
-const TimeContaier = styled.View`
   flex-direction: row;
-  justify-content: flex-end;
-`;
-const Thumbnail = styled.Image`
-  width: 190px;
-  height: 160px;
-  border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 20px;
+  align-items: center;
+  justify-content: space-between;
 `;
 const ProjectLogo = styled.Image`
-  width: 40px;
-  height: 40px;
-  border-radius: 30px;
-  z-index: 2;
-  position: absolute;
-  left: 5px;
-  top: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  margin-right: 10px;
 `;
-const SnsLogo = styled.Image`
-  width: 20px;
-  height: 20px;
-  margin-left: 10px;
-`;
-const CreatedAt = styled.Text`
-  font-size: 12px;
-  margin-right: 0px;
+const ProjectName = styled.Text`
+  font-size: 18px;
   color: white;
 `;
-const BlueTags = styled.Text`
+const ProjectBy = styled.Text`
   font-size: 12px;
-  color: white;
+  color: #c6c6c6;
 `;
-const ArticleTitle = styled.Text`
-  font-size: 12px;
-  color: white;
+const SubscribeBtn = styled.TouchableOpacity`
+  justify-content: space-between;
 `;
 
 //MAIN
@@ -78,7 +54,7 @@ const NFTproject: React.FC<ISquareCard> = ({
   const goToDetail = () => {
     //@ts-ignore
     navigation.navigate("Stack", {
-      screen: "DetailArticle",
+      screen: "Detail",
       params: {
         ...fullData,
       },
@@ -89,7 +65,16 @@ const NFTproject: React.FC<ISquareCard> = ({
   return (
     <TouchableOpacity onPress={goToDetail}>
       <Container>
-        <Text>hi</Text>
+        <View style={{ flexDirection: "row" }}>
+          <ProjectLogo source={{ uri: logourl }}></ProjectLogo>
+          <View>
+            <ProjectName>{title}</ProjectName>
+            <ProjectBy>by sangwan</ProjectBy>
+          </View>
+        </View>
+        <SubscribeBtn>
+          <AntDesign name="staro" size={24} color="white" />
+        </SubscribeBtn>
       </Container>
     </TouchableOpacity>
   );
