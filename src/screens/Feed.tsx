@@ -158,7 +158,6 @@ export default function Feed() {
     let projectBool: boolean = true;
     let snsBool: boolean = true;
     let dateBool: boolean = true;
-    let subscribeBool: boolean = true;
     const date = new Date(Date.parse(info.createdAt)).getTime();
     if (chain !== "") {
       chainBool = info.chain === chain.toUpperCase();
@@ -201,7 +200,7 @@ export default function Feed() {
       <HomeContainer>
         {/* HEADER */}
         <TouchableOpacity onPress={signOut}>
-          <Text>hi</Text>
+          <Text style={{ color: "white" }}>hi</Text>
         </TouchableOpacity>
         <HeaderScroller />
         {/* RECOMMEDED ARTICLE FLATLIST */}

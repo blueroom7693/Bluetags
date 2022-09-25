@@ -63,6 +63,11 @@ const Watchlist = () => {
   //TOKEN
   const userToken = useRecoilValue(token);
   console.log(userToken);
+  //GETDATA
+  const { isLoading: isLoadingNft, data: NftData } = useQuery<IInfo>(
+    ["watchlistInfo"],
+    getAllNft
+  );
   //SUBSCRIBE
   const [subscribeData, setSubscribeData] = useRecoilState(subscirbeProject);
   useEffect(() => {
@@ -74,12 +79,7 @@ const Watchlist = () => {
       })
       .then((response) => setSubscribeData(Object.values(response.data)));
   }, [subscirbeProject]);
-
-  //GETDATA
-  const { isLoading: isLoadingNft, data: NftData } = useQuery<IInfo>(
-    ["watchlistInfo"],
-    getAllNft
-  );
+  console.log(subscribeData);
   //RECOILVALUE
   const chain = useRecoilValue(chainString);
   const project = useRecoilValue(projectString);
@@ -139,10 +139,7 @@ const Watchlist = () => {
     }
   }, [chain, project, sns, today, past, subscribe, NftData]);
 
-  // console.log(subscribeData);
-  // console.log(data);
-
-  return (
+  return isLoadingNft ? null : (
     <SafeAreaView style={styles.container}>
       <HeaderScroller />
       <ContentsList
@@ -160,7 +157,6 @@ const Watchlist = () => {
           ></MiddleVCard>
         )}
       />
-
       <BottomFilter />
     </SafeAreaView>
   );
@@ -169,6 +165,8 @@ const Watchlist = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
