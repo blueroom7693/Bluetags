@@ -79,7 +79,21 @@ const Watchlist = () => {
       })
       .then((response) => setSubscribeData(Object.values(response.data)));
   }, [subscirbeProject]);
-  console.log(subscribeData);
+  // console.log(Object.values(subscribeData));
+
+  //query
+  const [userData, setUserData] = useState();
+  useEffect(() => {
+    axiosInstance
+      .get<IUser>(`/api/v1/user/data/`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
+      .then((response) => setUserData(response.data));
+  }, [subscirbeProject]);
+  console.log(userData);
+  // userLoading ? null : console.log(userData);
   //RECOILVALUE
   const chain = useRecoilValue(chainString);
   const project = useRecoilValue(projectString);
