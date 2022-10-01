@@ -12,7 +12,14 @@ import {
 import styled from "styled-components/native";
 import { getAllNft } from "../axios";
 import { useQuery } from "@tanstack/react-query";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { logUserOut } from "../async";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
@@ -38,6 +45,7 @@ import SquareCard from "../components/card/SquareCard";
 import { AllNftNonChain } from "../AllNft";
 import CircleCard from "../components/card/CircleCard";
 import HeaderScroller from "../components/HeaderScroller";
+import { DataContext } from "../context/DataProvider";
 
 //INTERFACE
 interface HMediaProps {
@@ -120,6 +128,9 @@ const SubHeaderTitle = styled.Text`
 
 // main
 export default function Feed() {
+  //USERDATA
+  const { user } = useContext(DataContext);
+  // console.log(user);
   //AllNftNonChain
   const AllNft = Object.values(AllNftNonChain);
   //BOTTOM FILTER

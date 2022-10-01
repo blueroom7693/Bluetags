@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { useRecoilState } from "recoil";
-import { isLogined } from "../atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isLogined, token } from "../atom";
 import { response } from "../constants/response";
 import { axiosInstance } from "./../axiosInstance";
 
@@ -23,33 +23,31 @@ export interface IUser {
 export const DataContext = createContext<IContext>({} as IContext);
 
 const DataProvider = ({ children }: any) => {
+  const userToken = useRecoilValue(token);
+
   const [isLogin, setIsLogin] = useRecoilState(isLogined);
-  const [token, setToken, removeToken] = useCookies(["token"]);
   const [user, setUser] = useState({} as IUser);
   useEffect(() => {
     async function getUser() {
-      if (token["token"] && token["token"] !== "undefined") {
+      if (userToken !== "undefined") {
         const data = await axiosInstance
           .get(`/api/v1/user/data/`, {
             headers: {
-              Authorization: `Bearer ${token["token"]}`,
+              Authorization: `Bearer ${userToken}`,
             },
           })
           .then((response) => {
-            setIsLogin(true);
             setUser(response.data);
           })
           .catch((error) => {
             if (error.response.data.name === "TokenExpiredError") {
               setUser({} as IUser);
-              setIsLogin(false);
-              removeToken("token");
             }
           });
       }
     }
     getUser();
-  }, [token]);
+  }, [userToken]);
 
   return (
     <DataContext.Provider value={{ isLogin, user }}>

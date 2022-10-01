@@ -60,7 +60,6 @@ const ProjectLogo = styled.Image`
 `;
 //MAIN
 const DetailArticle = ({ navigation: { setOptions }, route: { params } }) => {
-  console.log(params);
   //RETURN
   return (
     <Container>
