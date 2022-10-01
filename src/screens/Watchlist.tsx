@@ -18,6 +18,7 @@ import axios from "axios";
 import { axiosInstance } from "../axiosInstance";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
+  allSubscirbeProject,
   chainString,
   pastString,
   projectString,
@@ -30,25 +31,9 @@ import { IUser } from "../context/DataProvider";
 import { getAllNft, getUser, IData } from "../axios";
 import { IInfo } from "./Detail";
 import MiddleVCard from "../components/card/MiddleVCard";
-
-// const BgContainer = styled.View<{ isDark: boolean }>`
-//   flex: 1;
-//   align-items: center;
-//   background-color: ${(props) =>
-//     props.isDark ? props.theme.BLACK_COLOR : props.theme.WHITE};
-
-//   margin-bottom: 80px;
-// `;
-// const HeaderContainer = styled.View<{ isDark: boolean }>`
-//   /* flex: 1; */
-//   background-color: ${(props) =>
-//     props.isDark ? props.theme.BLACK_COLOR : "white"};
-//   width: 100%;
-//   height: 15%;
-//   flex-direction: row;
-//   background-color: #070707;
-//   margin-bottom: 40px;
-// `;
+import { AllNftNonChain } from "../AllNft";
+import CircleCard from "../components/card/CircleCard";
+import SmallCircleCard from "../components/card/SmallCircleCard";
 
 //CSS
 const ContentsList = styled.FlatList`
@@ -56,20 +41,45 @@ const ContentsList = styled.FlatList`
   flex: 2;
 `;
 
+const ProjectScroller = styled.FlatList`
+  background-color: black;
+  flex: 0.28;
+`;
+const HListSeparator = styled.View`
+  width: 20px;
+  background-color: black;
+`;
+
+//CSS FIRST COMPONENTS
+const AllProject = styled.TouchableOpacity`
+  width: 70px;
+  height: 70px;
+  border-radius: 70px;
+  background-color: #434343;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-right: 20px;
+`;
+
+const AllProjectText = styled.Text`
+  font-size: 20px;
+`;
+
 const Watchlist = () => {
   //THEME
   const isDark = useColorScheme() === "dark";
-  console.log(isDark);
   //TOKEN
   const userToken = useRecoilValue(token);
-  console.log(userToken);
+  //
+  const AllNftNonChains = AllNftNonChain;
   //GETDATA
   const { isLoading: isLoadingNft, data: NftData } = useQuery<IInfo>(
     ["watchlistInfo"],
     getAllNft
   );
   //SUBSCRIBE
-  const [subscribeData, setSubscribeData] = useRecoilState(subscirbeProject);
+  const [subscribeData, setSubscribeData] = useRecoilState(allSubscirbeProject);
   useEffect(() => {
     axiosInstance
       .get<IUser>(`/api/v1/user/favorite`, {
@@ -78,29 +88,16 @@ const Watchlist = () => {
         },
       })
       .then((response) => setSubscribeData(Object.values(response.data)));
-  }, [subscirbeProject]);
-  // console.log(Object.values(subscribeData));
+  }, [allSubscirbeProject]);
+  console.log(subscribeData);
 
-  //query
-  const [userData, setUserData] = useState();
-  useEffect(() => {
-    axiosInstance
-      .get<IUser>(`/api/v1/user/data/`, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      })
-      .then((response) => setUserData(response.data));
-  }, [subscirbeProject]);
-  console.log(userData);
-  // userLoading ? null : console.log(userData);
   //RECOILVALUE
   const chain = useRecoilValue(chainString);
-  const project = useRecoilValue(projectString);
+  const [project, setProject] = useRecoilState(projectString);
   const sns = useRecoilValue(snstString);
   const today = useRecoilValue(todayString);
   const past = useRecoilValue(pastString);
-  const subscribe = useRecoilValue(subscirbeProject);
+  const subscribe = useRecoilValue(allSubscirbeProject);
   //Filter
   const Watchlistfilter = (info: IData) => {
     let chainBool: boolean = true;
@@ -155,7 +152,28 @@ const Watchlist = () => {
 
   return isLoadingNft ? null : (
     <SafeAreaView style={styles.container}>
-      <HeaderScroller />
+      {/* <HeaderScroller /> */}
+      <ProjectScroller
+        data={subscribeData}
+        keyExtractor={(item) => item}
+        horizontal={true}
+        ItemSeparatorComponent={HListSeparator}
+        contentContainerStyle={{ paddingHorizontal: 20 }}
+        ListHeaderComponent={
+          <AllProject>
+            <AllProjectText
+              onPress={() => {
+                setProject("");
+              }}
+            >
+              All
+            </AllProjectText>
+          </AllProject>
+        }
+        renderItem={({ item }) => (
+          <SmallCircleCard title={item}></SmallCircleCard>
+        )}
+      />
       <ContentsList
         data={data}
         keyExtractor={(item) => item._id}

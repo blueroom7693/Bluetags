@@ -173,15 +173,7 @@ export default function Feed() {
     if (chain !== "") {
       chainBool = info.chain === chain.toUpperCase();
     }
-    if (project !== "") {
-      projectBool =
-        info.nft ===
-        project
-          .toLowerCase()
-          .replace(/ /gi, "")
-          .replace(/-/gi, "")
-          .replace(/`/gi, "");
-    }
+
     if (sns !== "") {
       snsBool = info.SNS === sns;
     }
@@ -189,7 +181,7 @@ export default function Feed() {
       dateBool = false;
     }
 
-    return chainBool && projectBool && snsBool && dateBool;
+    return chainBool && snsBool && dateBool;
   };
   //SETDATA
   const [data, setData] = useState<IData[]>();

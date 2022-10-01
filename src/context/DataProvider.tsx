@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { isLogined, token } from "../atom";
+import { isLogined, allSubscirbeProject, token } from "../atom";
 import { response } from "../constants/response";
 import { axiosInstance } from "./../axiosInstance";
 
@@ -24,8 +24,9 @@ export const DataContext = createContext<IContext>({} as IContext);
 
 const DataProvider = ({ children }: any) => {
   const userToken = useRecoilValue(token);
-
   const [isLogin, setIsLogin] = useRecoilState(isLogined);
+  const [subscribedProject, setSubscribedProject] =
+    useRecoilState(allSubscirbeProject);
   const [user, setUser] = useState({} as IUser);
   useEffect(() => {
     async function getUser() {
@@ -38,6 +39,7 @@ const DataProvider = ({ children }: any) => {
           })
           .then((response) => {
             setUser(response.data);
+            setSubscribedProject(user.favoriteNft);
           })
           .catch((error) => {
             if (error.response.data.name === "TokenExpiredError") {

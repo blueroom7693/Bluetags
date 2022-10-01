@@ -6,9 +6,10 @@ import { AllNft } from "../../AllNft";
 import { color } from "react-native-reanimated";
 import { AntDesign } from "@expo/vector-icons";
 import { DataContext } from "../../context/DataProvider";
-import { token } from "../../atom";
+import { allSubscirbeProject, token } from "../../atom";
 import { axiosInstance } from "../../axiosInstance";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import axios from "axios";
 
 //TYPE
 interface ISquareCard {
@@ -83,7 +84,13 @@ const NFTproject: React.FC<ISquareCard> = ({
       }
     }
   }, []);
+  // 배열 삭제
+  const onRemove = (id) => {
+    setSubscribeProject(subscribedProject.filter((user) => user !== id));
+  };
   // Subscribe
+  const [subscribedProject, setSubscribeProject] =
+    useRecoilState(allSubscirbeProject);
 
   const queryTitle = `${title
     .toLowerCase()
@@ -91,19 +98,21 @@ const NFTproject: React.FC<ISquareCard> = ({
     .replace(/-/gi, "")
     .replace(/`/gi, "")}`;
 
-  const onClick = () => {
-    console.log(queryTitle);
-    console.log(userToken);
-    console.log(user);
-    console.log(user.favoriteNft);
-  };
   const onClickSubcribe = () => {
-    axiosInstance.get(`/api/v1/user/favorite/choose/?nft=${queryTitle}`, {
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      },
-    });
-    console.log(user);
+    try {
+      axiosInstance.get(`/api/v1/user/favorite/choose/?nft=${queryTitle}`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+      if (subscribedProject.includes(`${queryTitle}`)) {
+        onRemove(`${queryTitle}`);
+      } else {
+        setSubscribeProject([...subscribedProject, `${queryTitle}`]);
+      }
+    } catch {
+      (error) => console.log(error);
+    }
   };
 
   //ALLDATA
@@ -119,13 +128,13 @@ const NFTproject: React.FC<ISquareCard> = ({
             {isSubscribed ? <ProjectBy>subscribed</ProjectBy> : null}
           </View>
         </View>
-        {/* <SubscribeBtn
+        <SubscribeBtn
           onPress={() => {
-            onClickSubcribe;
+            onClickSubcribe();
             setIsSubscribed((prev) => !prev);
           }}
-        > */}
-        <SubscribeBtn onPress={onClick}>
+        >
+          {/* <SubscribeBtn onPress={onClick}> */}
           <AntDesign name="staro" size={24} color="white" />
         </SubscribeBtn>
       </Container>

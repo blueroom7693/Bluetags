@@ -65,3 +65,8 @@ export const subscirbeProject = atom<string[]>({
   key: "subscirbeProject",
   default: [],
 });
+
+export const allSubscirbeProject = atom<string[]>({
+  key: "allSubscirbeProject",
+  default: [],
+});
