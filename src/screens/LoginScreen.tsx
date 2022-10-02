@@ -8,11 +8,9 @@ import {
 } from "react-native";
 
 import { isLogined } from "../atom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { useForm, Controller } from "react-hook-form";
-import { useCookies } from "react-cookie";
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import styled from "styled-components/native";
 import { logUserIn } from "../async";
@@ -31,6 +29,12 @@ const InputBox = styled.View`
 const ErrorText = styled.Text`
   color: white;
   margin-bottom: 10px;
+`;
+
+const TextInputBox = styled.TextInput`
+  background-color: white;
+  height: 30px;
+  width: 80%;
 `;
 
 const LoginScreen = ({ navigation }) => {
@@ -126,7 +130,7 @@ const LoginScreen = ({ navigation }) => {
       >
         <Text>New to the app?</Text>
         <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-          <Text style={{ color: "#AD40AF", fontWeight: "700" }}> Register</Text>
+          <Text style={{ color: "#0008ff", fontWeight: "700" }}> Register</Text>
         </TouchableOpacity>
       </View>
     </AuthLayout>

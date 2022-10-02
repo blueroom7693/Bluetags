@@ -21,6 +21,9 @@ import Watchlist from "../screens/Watchlist";
 import Feed from "../screens/Feed";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isBottomFilter } from "../atom";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faHexagonVerticalNft } from "@fortawesome/pro-light-svg-icons";
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
 DrawerActions;
 
 const DrawerBtnContainer = styled.View`
@@ -71,65 +74,12 @@ const Tabs = () => {
         name="trending"
         component={Feed}
         options={({ navigation, route }) => ({
-          // headerLeft: () => (
-          //   <DrawerBtnContainer>
-          //     <Ionicons
-          //       name="menu"
-          //       size={24}
-          //       color="white"
-          //       onPress={() => navigation.openDrawer()}
-          //     />
-          //   </DrawerBtnContainer>
-          // ),
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons
-              name={"local-fire-department"}
-              color={color}
-              size={30}
-            />
-          ),
-          headerRight: ({ color, size }) => (
-            <HeaderRight>
-              <MaterialIcons name={"home-filled"} color={"white"} size={30} />
-              <Ionicons
-                name="search"
-                color={"white"}
-                size={30}
-                onPress={() =>
-                  navigation.navigate("Stack", {
-                    screen: "Search",
-                    params: {
-                      // ...fullData,
-                    },
-                  })
-                }
-              />
-              <Ionicons
-                name={"person"}
-                color={"white"}
-                size={30}
-                onPress={() =>
-                  navigation.navigate("Stack", {
-                    screen: "Profile",
-                    params: {
-                      // ...fullData,
-                    },
-                  })
-                }
-              />
-            </HeaderRight>
-          ),
-        })}
-      />
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        options={({ navigation, route }) => ({
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name={"home-filled"} color={color} size={30} />
           ),
           headerRight: ({ color, size }) => (
             <HeaderRight>
+              <FontAwesomeIcon icon={faFilter} color={"white"} size={24} />
               <MaterialIcons name={"home-filled"} color={"white"} size={30} />
               <Ionicons
                 name="search"
@@ -169,6 +119,50 @@ const Tabs = () => {
           tabBarBadgeStyle: { backgroundColor: "red" },
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="star" color={color} size={30} />
+          ),
+          headerRight: ({ color, size }) => (
+            <HeaderRight>
+              <MaterialIcons name={"home-filled"} color={"white"} size={30} />
+              <Ionicons
+                name="search"
+                color={"white"}
+                size={30}
+                onPress={() =>
+                  navigation.navigate("Stack", {
+                    screen: "Search",
+                    params: {
+                      // ...fullData,
+                    },
+                  })
+                }
+              />
+              <Ionicons
+                name={"person"}
+                color={"white"}
+                size={30}
+                onPress={() =>
+                  navigation.navigate("Stack", {
+                    screen: "Profile",
+                    params: {
+                      // ...fullData,
+                    },
+                  })
+                }
+              />
+            </HeaderRight>
+          ),
+        })}
+      />
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={({ navigation, route }) => ({
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesomeIcon
+              icon={faHexagonVerticalNft}
+              color={color}
+              size={32}
+            />
           ),
           headerRight: ({ color, size }) => (
             <HeaderRight>

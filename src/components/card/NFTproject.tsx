@@ -114,10 +114,9 @@ const NFTproject: React.FC<ISquareCard> = ({
       (error) => console.log(error);
     }
   };
-
   //ALLDATA
   const AllNfts = AllNft;
-  return (
+  return subscribedProject ? (
     <TouchableOpacity onPress={goToDetail}>
       <Container>
         <View style={{ flexDirection: "row" }}>
@@ -125,7 +124,6 @@ const NFTproject: React.FC<ISquareCard> = ({
           <View>
             <ProjectName>{title}</ProjectName>
             <ProjectBy>by sangwan</ProjectBy>
-            {isSubscribed ? <ProjectBy>subscribed</ProjectBy> : null}
           </View>
         </View>
         <SubscribeBtn
@@ -135,11 +133,16 @@ const NFTproject: React.FC<ISquareCard> = ({
           }}
         >
           {/* <SubscribeBtn onPress={onClick}> */}
-          <AntDesign name="staro" size={24} color="white" />
+          {/* {isSubscribed ? ( */}
+          {subscribedProject.includes(`${queryTitle}`) ? (
+            <AntDesign name="star" size={24} color="white" />
+          ) : (
+            <AntDesign name="staro" size={24} color="white" />
+          )}
         </SubscribeBtn>
       </Container>
     </TouchableOpacity>
-  );
+  ) : null;
 };
 
 export default NFTproject;
