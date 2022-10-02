@@ -5,5 +5,5 @@ export const TextInput = styled.TextInput`
   padding: 15px 7px;
   border-radius: 4px;
   color: white;
-  margin-bottom: ${(props) => (props.lastOne ? "15" : 8)}px;
+  margin-bottom: ${(props) => (props.lastOne ? "15" : 15)}px;
 `;

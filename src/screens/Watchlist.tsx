@@ -43,7 +43,9 @@ const ContentsList = styled.FlatList`
 
 const ProjectScroller = styled.FlatList`
   background-color: black;
-  flex: 0.28;
+  flex: 0.23;
+  border-color: #353535;
+  border-bottom-width: 1px;
 `;
 const HListSeparator = styled.View`
   width: 20px;
@@ -52,10 +54,10 @@ const HListSeparator = styled.View`
 
 //CSS FIRST COMPONENTS
 const AllProject = styled.TouchableOpacity`
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   border-radius: 70px;
-  background-color: #434343;
+  background-color: #ffffff;
   justify-content: center;
   align-items: center;
   margin-top: 20px;

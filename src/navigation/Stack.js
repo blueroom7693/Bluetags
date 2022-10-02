@@ -16,12 +16,16 @@ const Stack = () => {
       screenOptions={{
         headerBackTitleVisible: false,
         headerStyle: {
-          backgroundColor: isDark ? BLACK_COLOR : "white",
+          backgroundColor: isDark ? BLACK_COLOR : BLACK_COLOR,
         },
         headerTitleStyle: {
-          color: isDark ? "white" : BLACK_COLOR,
+          color: isDark ? "white" : "white",
         },
         headerShown: true,
+        headerTintColor: "white",
+        // headerBackImageSource: {
+        //   uri: "https://media.istockphoto.com/photos/old-rustic-wooden-cross-isolated-on-white-background-christian-faith-picture-id1054653410?b=1&k=20&m=1054653410&s=170667a&w=0&h=PBKCfoVrjPgkpkoHFhrZ1gTmL8lWiI1o_GEgq_8YwgY=",
+        // },
       }}
     >
       <NativeStack.Screen name="Detail" component={Detail} />

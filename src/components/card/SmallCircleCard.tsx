@@ -11,8 +11,8 @@ interface ICircleProject {
 }
 //CSS
 const ProjectLogo = styled.Image`
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   border-radius: 100px;
 `;
 const Container = styled.View`

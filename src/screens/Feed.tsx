@@ -143,14 +143,6 @@ export default function Feed() {
   const openDetail = () => {
     setBottomDetail(true);
   };
-  //logout
-  const [isLogin, setIsLogin] = useRecoilState(isLogined);
-  const signOut = async () => {
-    try {
-      await AsyncStorage.removeItem("sangwan");
-      setIsLogin(false);
-    } catch (e) {}
-  };
   //query
   const { isLoading: isLoadingNft, data: NftData } = useQuery<IInfo>(
     ["homeInfo"],
@@ -202,9 +194,6 @@ export default function Feed() {
     <SafeAreaView style={styles.container}>
       <HomeContainer>
         {/* HEADER */}
-        <TouchableOpacity onPress={signOut}>
-          <Text style={{ color: "white" }}>hi</Text>
-        </TouchableOpacity>
         <HeaderScroller />
         {/* RECOMMEDED ARTICLE FLATLIST */}
         <SubHeaderTitle>start with tags</SubHeaderTitle>

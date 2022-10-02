@@ -18,6 +18,10 @@ import AuthLayout from "../components/auth/AuthLayout";
 import AuthButton from "../components/auth/AuthButton";
 import { TextInput } from "../components/auth/AuthShared";
 
+import GoogleSVG from "../assets/images/misc/google.svg";
+import FacebookSVG from "../assets/images/misc/facebook.svg";
+import TwitterSVG from "../assets/images/misc/twitter.svg";
+
 const InputBox = styled.View`
   flex-direction: row;
   border-bottom-color: #ccc;
@@ -31,10 +35,22 @@ const ErrorText = styled.Text`
   margin-bottom: 10px;
 `;
 
-const TextInputBox = styled.TextInput`
-  background-color: white;
-  height: 30px;
-  width: 80%;
+const DetailText = styled.Text`
+  color: white;
+  font-size: 14px;
+`;
+const RegisterText = styled.Text`
+  color: blue;
+  font-size: 14px;
+`;
+const SNSloginBox = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+`;
+const SNSlogo = styled.TouchableOpacity`
+  margin: 10px;
 `;
 
 const LoginScreen = ({ navigation }) => {
@@ -46,8 +62,6 @@ const LoginScreen = ({ navigation }) => {
   //setError
   const [errorMessage, setErrorMessage] = useState("");
   //useRecoil
-  // const isLogin = useRecoilValue(isLogined);
-  //setRecoilValue
   const [isLogin, setIsLogin] = useRecoilState(isLogined);
   //useForm
   const {
@@ -121,6 +135,20 @@ const LoginScreen = ({ navigation }) => {
         disabled={!watch("username") || !watch("password")}
         onPress={handleSubmit(onValid)}
       />
+      <View style={{ alignItems: "center", marginTop: 30 }}>
+        <DetailText>or continue with</DetailText>
+      </View>
+      <SNSloginBox>
+        <SNSlogo onPress={() => {}}>
+          <GoogleSVG height={30} width={30} />
+        </SNSlogo>
+        <SNSlogo onPress={() => {}}>
+          <FacebookSVG height={30} width={30} />
+        </SNSlogo>
+        <SNSlogo onPress={() => {}}>
+          <TwitterSVG height={30} width={30} />
+        </SNSlogo>
+      </SNSloginBox>
       <View
         style={{
           flexDirection: "row",
@@ -128,9 +156,9 @@ const LoginScreen = ({ navigation }) => {
           marginBottom: 30,
         }}
       >
-        <Text>New to the app?</Text>
+        <DetailText>Not a member? </DetailText>
         <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-          <Text style={{ color: "#0008ff", fontWeight: "700" }}> Register</Text>
+          <RegisterText> Register now</RegisterText>
         </TouchableOpacity>
       </View>
     </AuthLayout>
