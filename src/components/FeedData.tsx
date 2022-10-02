@@ -11,7 +11,6 @@ import {
   subscirbeProject,
   todayString,
 } from "../atom";
-import { IInfo } from "../screens/Feed";
 
 //INTERFACE
 interface HMediaProps {

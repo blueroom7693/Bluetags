@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Cardscreen from "../screens/Card";
-import { Button, useColorScheme, Text, View } from "react-native";
+import { Button, useColorScheme, Text, View, Image } from "react-native";
 import {
   BLACK_COLOR,
   BLUE,
@@ -16,14 +16,15 @@ import Search from "../screens/Search";
 import Profile from "../screens/Profile";
 import styled from "styled-components";
 import { DrawerActions } from "@react-navigation/native";
-import Home from "../screens/Home";
 import Watchlist from "../screens/Watchlist";
-import Feed from "../screens/Feed";
+import Feed from "../screens/Home";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isBottomFilter } from "../atom";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faHexagonVerticalNft } from "@fortawesome/pro-light-svg-icons";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import NFT from "../screens/NFT";
+import Home from "../screens/Home";
 DrawerActions;
 
 const DrawerBtnContainer = styled.View`
@@ -33,8 +34,28 @@ const DrawerBtnContainer = styled.View`
 const HeaderRight = styled.View`
   flex-direction: row;
 `;
+const HeaderLeft = styled.View`
+  flex-direction: row;
+`;
 
 const Tab = createBottomTabNavigator();
+
+//HEADER LOGO
+const HeaderLogo = styled.Image`
+  width: 120px;
+  height: 30px;
+  /* border-radius: 30px; */
+`;
+
+function LogoTitle() {
+  return (
+    <HeaderLogo
+      source={{
+        uri: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Logo_Blue_on_Transparent.png",
+      }}
+    />
+  );
+}
 
 const Tabs = () => {
   const isDark = useColorScheme() === "dark";
@@ -46,7 +67,7 @@ const Tabs = () => {
       }}
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: isDark ? LIGHT_GREY : "black",
+          backgroundColor: isDark ? LIGHT_GREY : "#212121",
           height: 50,
           position: "absolute",
           borderTopWidth: 1,
@@ -71,12 +92,13 @@ const Tabs = () => {
       }}
     >
       <Tab.Screen
-        name="trending"
-        component={Feed}
+        name="Home"
+        component={Home}
         options={({ navigation, route }) => ({
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name={"home-filled"} color={color} size={30} />
           ),
+          headerTitle: (props) => <LogoTitle {...props} />,
           headerRight: ({ color, size }) => (
             <HeaderRight>
               <FontAwesomeIcon icon={faFilter} color={"white"} size={24} />
@@ -154,8 +176,8 @@ const Tabs = () => {
         })}
       />
       <Tab.Screen
-        name="Home"
-        component={Home}
+        name="NFT"
+        component={NFT}
         options={({ navigation, route }) => ({
           tabBarIcon: ({ color, size }) => (
             <FontAwesomeIcon

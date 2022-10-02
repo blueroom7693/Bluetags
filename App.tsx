@@ -22,6 +22,9 @@ import * as Font from "expo-font";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getUserStored } from "./src/async";
 import { getAllNft, IData } from "./src/axios";
+import * as NavigationBar from "expo-navigation-bar";
+NavigationBar.setBackgroundColorAsync("#212121");
+
 SplashScreen.preventAutoHideAsync();
 
 export interface IInfo {
