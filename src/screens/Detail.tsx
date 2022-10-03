@@ -1,8 +1,8 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FlatList, Text, TouchableOpacity } from "react-native";
-import styled from "styled-components/native";
+import styled, { ThemeContext } from "styled-components/native";
 import { getNftInfo } from "../axios";
 import SmallHCard from "../components/card/SmallHCard";
 import SquareCard from "../components/card/SquareCard";
@@ -38,15 +38,10 @@ interface IData {
 }
 //CSS
 const Container = styled.FlatList`
-  background-color: black;
+  background-color: ${(props) => props.theme.Bg0dp};
   display: flex;
   flex: 1;
 `;
-// const Container = styled.ScrollView`
-
-//   flex-direction: column;
-//   background-color: #000000;
-// `;
 const Header = styled.View`
   align-items: center;
   margin: 40px;
@@ -58,7 +53,7 @@ const ProjectLogo = styled.Image`
 `;
 const ProjectName = styled.Text`
   font-size: 24px;
-  color: white;
+  color: ${(props) => props.theme.Text0dp};
   margin-top: 20px;
   font-weight: 800;
 `;

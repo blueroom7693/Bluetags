@@ -10,7 +10,7 @@ import SquareCard from "../components/card/SquareCard";
 
 //CSS
 const Container = styled.ScrollView`
-  background-color: black;
+  background-color: ${(props) => props.theme.Bg0dp};
   display: flex;
   flex: 1;
   padding: 20px;
@@ -30,17 +30,17 @@ const ThumbnailPhoto = styled.Image`
 `;
 const ArticleTitle = styled.Text`
   font-size: 14px;
-  color: white;
+  color: ${(props) => props.theme.Text0dp};
   margin-top: 20px;
   font-weight: 800;
 `;
 const WrittenBy = styled.Text`
   font-size: 14px;
-  color: gray;
+  color: ${(props) => props.theme.Text1dp}; ;
 `;
 const Description = styled.Text`
   font-size: 12px;
-  color: white;
+  color: ${(props) => props.theme.Text0dp}; ;
 `;
 const SubContaier = styled.View`
   flex-direction: row;

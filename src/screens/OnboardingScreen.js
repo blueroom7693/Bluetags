@@ -9,85 +9,78 @@ import {
 } from "react-native";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { BlurView, VibrancyView } from "@react-native-community/blur";
 import Gaming from "../assets/images/misc/gaming.svg";
 import { BLACK_COLOR } from "../colors";
+import { useContext } from "react";
+import { ThemeContext } from "styled-components/native";
 
 const Container = styled.View`
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+  flex: 1;
+  flex-direction: column;
 `;
 
 const BgImg = styled.Image`
-  flex: 1;
-  position: absolute;
-`;
-
-const MessageContainer = styled.View`
-  margin-bottom: 150px;
-`;
-
-const WelcomeMessage1 = styled.Text`
-  font-size: 36px;
-  text-align: center;
-  font-weight: 700;
-`;
-const WelcomeMessage2 = styled.Text`
-  font-size: 24px;
-  text-align: center;
+  height: 1000px;
 `;
 
 const StartButton = styled.TouchableOpacity`
-  flex: 0.2;
-  background-color: #1e272e;
-  /* height: 10%; */
-  width: 80%;
-  justify-content: space-between;
-  border-radius: 10px;
+  background-color: ${(props) => props.theme.Bg1dp};
+  /* width: 40%; */
+  /* justify-content: space-between; */
+  border-radius: 20px;
   flex-direction: row;
   align-items: center;
-  padding: 20px;
-
-  /* padding: 20px; */
-  /* width: 80%; */
+  width: 100px;
+  height: 50px;
 `;
 
 const ButtonMessage = styled.Text`
-  font-size: 24px;
+  font-size: 18px;
   color: #fff;
 `;
+
+const ButtonContainer = styled.View`
+  flex-direction: row;
+  flex: 0.25;
+  height: 200px;
+`;
+const ImageContainer = styled.View`
+  flex: 1;
+`;
+
 const OnboardingScreen = ({ navigation }) => {
+  const theme = useContext(ThemeContext);
+
   return (
-    <Container>
-      <BgImg
-        resizeMode="contain"
-        key={"blurryImage"}
-        source={{
-          uri: "https://cdn.wallpapersafari.com/67/85/mrKhq2.jpg",
-        }}
-        style={styles.absolute}
-      />
-      <MessageContainer>
-        <WelcomeMessage1>Don't DYOR anymore😒</WelcomeMessage1>
-        <WelcomeMessage2>Easily manage your NFTs😁</WelcomeMessage2>
-      </MessageContainer>
-      <StartButton onPress={() => navigation.navigate("Login")}>
-        <ButtonMessage>Let's start</ButtonMessage>
-        <MaterialIcons name="arrow-forward-ios" size={22} color="#fff" />
-      </StartButton>
-    </Container>
+    <SafeAreaView style={styles.container}>
+      <Container>
+        <ImageContainer>
+          <BgImg
+            source={{
+              uri: "https://images.unsplash.com/photo-1643941687361-7101751cf89c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1025&q=80",
+            }}
+          />
+        </ImageContainer>
+        <ButtonContainer>
+          <StartButton onPress={() => navigation.navigate("Login")}>
+            <ButtonMessage>Sign in</ButtonMessage>
+            {/* <MaterialIcons name="arrow-forward-ios" size={22} color="#fff" /> */}
+          </StartButton>
+          <StartButton onPress={() => navigation.navigate("Register")}>
+            <ButtonMessage>Sign up</ButtonMessage>
+            {/* <MaterialIcons name="arrow-forward-ios" size={22} color="#fff" /> */}
+          </StartButton>
+        </ButtonContainer>
+      </Container>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  absolute: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
+  container: {
+    flex: 1,
   },
 });
 

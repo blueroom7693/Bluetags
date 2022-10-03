@@ -1,4 +1,4 @@
-import styled from "styled-components/native";
+import styled, { ThemeContext } from "styled-components/native";
 import React, { useRef, useState } from "react";
 import { Text, StyleSheet, SafeAreaView, View } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -18,12 +18,13 @@ import { faCircleQuestion } from "@fortawesome/free-regular-svg-icons";
 import { useRecoilState } from "recoil";
 import { isLogined } from "../atom";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useContext } from "react";
 
 const Container = styled.View`
   flex: 1;
   justify-content: flex-start;
   align-items: center;
-  background-color: #070707;
+  background-color: ${(props) => props.theme.Bg0dp};
   flex-direction: column;
   width: 100%;
 `;
@@ -35,7 +36,7 @@ const ProfileContainer = styled.TouchableOpacity`
   justify-content: space-between;
   padding: 20px;
   border-bottom-width: 1px;
-  border-color: gray;
+  border-color: ${(props) => props.theme.BgBorder};
 `;
 
 const OptionContainer = styled.TouchableOpacity`
@@ -55,23 +56,26 @@ const ProfileImage = styled.Image`
 `;
 
 const Name = styled.Text`
-  color: white;
+  color: ${(props) => props.theme.Text0dp};
   font-size: 18px;
   font-weight: 400;
 `;
 const OptionName = styled.Text`
-  color: white;
+  color: ${(props) => props.theme.Text0dp};
   font-size: 16px;
   margin-left: 20px;
 `;
 
 const ServiceTerms = styled.Text`
-  color: gray;
+  color: ${(props) => props.theme.Text1dp};
   font-size: 14px;
   margin-top: 250px;
 `;
 
 const Profile = () => {
+  //
+  const theme = useContext(ThemeContext);
+
   //logout
   const [isLogin, setIsLogin] = useRecoilState(isLogined);
   const signOut = async () => {
@@ -93,40 +97,64 @@ const Profile = () => {
             />
             <Name>SANGWAN KIM</Name>
           </View>
-          <FontAwesomeIcon icon={faChevronRight} color={"white"} size={18} />
+          <FontAwesomeIcon
+            icon={faChevronRight}
+            color={theme.Text0dp}
+            size={18}
+          />
         </ProfileContainer>
         <OptionContainer>
-          <FontAwesomeIcon icon={faSquareUser} color={"white"} size={24} />
+          <FontAwesomeIcon
+            icon={faSquareUser}
+            color={theme.Text0dp}
+            size={24}
+          />
           <OptionName>내 채널</OptionName>
         </OptionContainer>
         <OptionContainer>
-          <FontAwesomeIcon icon={faDownToBracket} color={"white"} size={24} />
+          <FontAwesomeIcon
+            icon={faDownToBracket}
+            color={theme.Text0dp}
+            size={24}
+          />
           <OptionName>오프라인 저장 콘텐츠</OptionName>
         </OptionContainer>
         <OptionContainer>
-          <FontAwesomeIcon icon={faClockRotateLeft} color={"white"} size={24} />
+          <FontAwesomeIcon
+            icon={faClockRotateLeft}
+            color={theme.Text0dp}
+            size={24}
+          />
           <OptionName>기록</OptionName>
         </OptionContainer>
         <OptionContainer>
-          <FontAwesomeIcon icon={faBackward} color={"white"} size={24} />
+          <FontAwesomeIcon icon={faBackward} color={theme.Text0dp} size={24} />
           <OptionName>내 Recap</OptionName>
         </OptionContainer>
         <OptionContainer>
-          <FontAwesomeIcon icon={faCircleDollar} color={"white"} size={24} />
+          <FontAwesomeIcon
+            icon={faCircleDollar}
+            color={theme.Text0dp}
+            size={24}
+          />
           <OptionName>유료 멤버십</OptionName>
         </OptionContainer>
         <OptionContainer>
-          <FontAwesomeIcon icon={faGear} color={"white"} size={24} />
+          <FontAwesomeIcon icon={faGear} color={theme.Text0dp} size={24} />
           <OptionName>설정</OptionName>
         </OptionContainer>
         <OptionContainer>
-          <FontAwesomeIcon icon={faCircleQuestion} color={"white"} size={24} />
+          <FontAwesomeIcon
+            icon={faCircleQuestion}
+            color={theme.Text0dp}
+            size={24}
+          />
           <OptionName>고객센터</OptionName>
         </OptionContainer>
         <OptionContainer onPress={signOut}>
           <FontAwesomeIcon
             icon={faRightFromBracket}
-            color={"white"}
+            color={theme.Text0dp}
             size={24}
           />
           <OptionName>로그아웃</OptionName>

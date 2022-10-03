@@ -16,14 +16,14 @@ interface ICircleProject {
 }
 //CSS
 const Title = styled.Text`
-  color: white;
+  color: ${(props) => props.theme.Text0dp};
   font-size: 12px;
 `;
 const ListContainer = styled.View`
   margin-bottom: 40px;
 `;
 const Container = styled.TouchableOpacity`
-  background-color: black;
+  background-color: ${(props) => props.theme.Bg0dp};
   justify-content: center;
   align-items: center;
   flex-direction: row;
@@ -42,7 +42,7 @@ const ProjectLogo = styled.Image`
   margin-right: 10px;
 `;
 const BlueTags = styled.Text`
-  color: gray;
+  color: ${(props) => props.theme.Text1dp};
   font-size: 14px;
 `;
 

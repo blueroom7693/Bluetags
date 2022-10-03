@@ -64,7 +64,6 @@ const Tabs = () => {
   const theme = useContext(ThemeContext);
   NavigationBar.setBackgroundColorAsync(`${theme.Tabbar}`);
 
-  const isDark = useColorScheme() === "dark";
   const isTabBar = useRecoilValue(isBottomFilter);
   return (
     <Tab.Navigator
@@ -108,11 +107,19 @@ const Tabs = () => {
           headerTitle: (props) => <LogoTitle {...props} />,
           headerRight: ({ color, size }) => (
             <HeaderRight>
-              <FontAwesomeIcon icon={faFilter} color={"white"} size={24} />
-              <MaterialIcons name={"home-filled"} color={"white"} size={30} />
+              <FontAwesomeIcon
+                icon={faFilter}
+                color={theme.Text0dp}
+                size={24}
+              />
+              <MaterialIcons
+                name={"home-filled"}
+                color={theme.Text0dp}
+                size={30}
+              />
               <Ionicons
                 name="search"
-                color={"white"}
+                color={theme.Text0dp}
                 size={30}
                 onPress={() =>
                   navigation.navigate("Stack", {
@@ -125,7 +132,7 @@ const Tabs = () => {
               />
               <Ionicons
                 name={"person"}
-                color={"white"}
+                color={theme.Text0dp}
                 size={30}
                 onPress={() =>
                   navigation.navigate("Stack", {
