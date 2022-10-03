@@ -17,7 +17,7 @@ interface ISquareCard {
 }
 //CSS
 const Container = styled.View`
-  background-color: black;
+  background-color: ${(props) => props.theme.Bg0dp};
   flex-direction: column;
   align-items: center;
   width: 300px;
@@ -46,10 +46,6 @@ const ProjectLogo = styled.Image`
   height: 50px;
   border-radius: 30px;
   margin-right: 20px;
-  /* z-index: 2;
-  position: absolute; */
-  /* left: 5px;
-  top: 30px; */
 `;
 const SnsLogo = styled.Image`
   width: 20px;
@@ -59,15 +55,15 @@ const SnsLogo = styled.Image`
 const CreatedAt = styled.Text`
   font-size: 12px;
   margin-right: 0px;
-  color: white;
+  color: ${(props) => props.theme.Text0dp}; ;
 `;
 const BlueTags = styled.Text`
   font-size: 12px;
-  color: white;
+  color: ${(props) => props.theme.Text0dp}; ;
 `;
 const ArticleTitle = styled.Text`
   font-size: 12px;
-  color: white;
+  color: ${(props) => props.theme.Text0dp}; ;
 `;
 
 //MAIN

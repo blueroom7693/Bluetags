@@ -37,19 +37,21 @@ import SmallCircleCard from "../components/card/SmallCircleCard";
 
 //CSS
 const ContentsList = styled.FlatList`
-  background-color: black;
+  background-color: ${(props) => props.theme.Bg0dp};
   flex: 2;
+  /* width: 100%; */
 `;
 
 const ProjectScroller = styled.FlatList`
-  background-color: black;
+  background-color: ${(props) => props.theme.Bg0dp};
   flex: 0.23;
-  border-color: #353535;
+  border-color: ${(props) => props.theme.BgBorder};
   border-bottom-width: 1px;
+  /* width: 100%; */
 `;
 const HListSeparator = styled.View`
   width: 20px;
-  background-color: black;
+  background-color: ${(props) => props.theme.Bg0dp};
 `;
 
 //CSS FIRST COMPONENTS
@@ -57,7 +59,7 @@ const AllProject = styled.TouchableOpacity`
   width: 50px;
   height: 50px;
   border-radius: 70px;
-  background-color: #ffffff;
+  background-color: ${(props) => props.theme.Text0dp};
   justify-content: center;
   align-items: center;
   margin-top: 20px;

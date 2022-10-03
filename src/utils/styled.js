@@ -1,10 +1,32 @@
 export const lightTheme = {
-  mainBgColor: "white",
-  textColor: "#1e272e",
+  Bg0dp: "#FFFFFF",
+  Bg1dp: "#FFFFFF",
+  BgBorder: "#353535",
+  Text0dp: "#000000",
+  Text1dp: "#000000",
+  Primary0dp: "#0086FF",
+  Primary1dp: "#0086FF",
+  PrimaryContent0dp: "#000000",
+  Secondary0dp: "#E64C66",
+  onError: "#CF6679",
+  Tabbar: "#1f1f1f",
+  TabbarActive: "black",
+  TabbarInactive: "white",
 };
 export const darkTheme = {
-  mainBgColor: "#1e272e",
-  textColor: "#d2dae2",
+  Bg0dp: "#121212",
+  Bg1dp: "#121212",
+  BgBorder: "#353535",
+  Text0dp: "#DEE0E3",
+  Text1dp: "#4C555C",
+  Primary0dp: "#0086FF",
+  Primary1dp: "#0086FF",
+  PrimaryContent0dp: "#000000",
+  Secondary0dp: "#E64C66",
+  onError: "#CF6679",
+  Tabbar: "#1f1f1f",
+  TabbarActive: "#FFA801",
+  TabbarInactive: "white",
 };
 
 export const Pallet = {

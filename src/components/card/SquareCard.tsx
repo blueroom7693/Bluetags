@@ -17,13 +17,12 @@ interface ISquareCard {
 }
 //CSS
 const Container = styled.View`
-  background-color: black;
+  background-color: ${(props) => props.theme.Bg0dp};
   width: 190px;
-  border-width: 1px;
   text-align: left;
   justify-content: center;
   font-size: 40px;
-  color: black;
+  color: ${(props) => props.theme.Bg0dp};
   margin-top: 20px;
 `;
 const TimeContaier = styled.View`
@@ -54,15 +53,15 @@ const SnsLogo = styled.Image`
 const CreatedAt = styled.Text`
   font-size: 12px;
   margin-right: 0px;
-  color: white;
+  color: ${(props) => props.theme.Text0dp};
 `;
 const BlueTags = styled.Text`
   font-size: 12px;
-  color: white;
+  color: ${(props) => props.theme.Text0dp};
 `;
 const ArticleTitle = styled.Text`
   font-size: 12px;
-  color: white;
+  color: ${(props) => props.theme.Text0dp};
 `;
 
 //MAIN

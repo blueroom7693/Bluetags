@@ -55,47 +55,27 @@ const HomeContainer = styled.ScrollView`
   display: flex;
   flex: 1;
   flex-direction: column;
-  background-color: black;
+  background-color: ${(props) => props.theme.Bg0dp};
 `;
-const Sample = styled.Text`
-  color: white;
-`;
+
 const NFTList = styled.FlatList`
   flex: 2;
-  background-color: black;
+  background-color: ${(props) => props.theme.Bg0dp};
 `;
-const HeaderScroll = styled.ScrollView`
-  flex-direction: row;
-  flex: 0.1;
-  background-color: black;
-  /* height: WINDOW_HEIGHT/4; */
-`;
-const Filterbox = styled.TouchableOpacity`
-  margin-left: 15px;
-  border-width: 2px;
-  border-radius: 10px;
-  border-color: white;
-  background-color: grey;
-  padding-left: 10px;
-  padding-right: 10px;
-`;
-const FilterText = styled.Text`
-  color: white;
-  font-size: 12px;
-`;
+
 export const HListSeparator = styled.View`
   width: 20px;
-  background-color: black;
+  background-color: ${(props) => props.theme.Bg0dp};
 `;
 const HeaderTitle = styled.Text`
   font-size: 24px;
-  color: white;
+  color: ${(props) => props.theme.Text0dp};
   margin-left: 30px;
   font-weight: 800;
 `;
 const SubHeaderTitle = styled.Text`
   font-size: 18px;
-  color: grey;
+  color: ${(props) => props.theme.Text1dp};
   margin-left: 30px;
   margin-bottom: -8px;
   margin-top: 35px;

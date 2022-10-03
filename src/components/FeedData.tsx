@@ -37,7 +37,8 @@ interface IData {
 }
 //CSS
 const HeaderText = styled.Text`
-  color: white;
+  /* color:white; */
+  color: ${(props) => props.theme.mainTextColor}; ;
 `;
 //MAIN
 function FeedData({ nftData }: IProps, { _id }: IData) {

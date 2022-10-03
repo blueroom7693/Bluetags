@@ -16,19 +16,12 @@ const ProjectLogo = styled.Image`
   border-radius: 100px;
 `;
 const Container = styled.View`
-  background-color: black;
+  background-color: ${(props) => props.theme.Bg0dp};
   justify-content: center;
   align-items: center;
   margin-top: 20px;
 `;
-const Title = styled.Text`
-  color: white;
-  font-size: 15px;
-`;
-const Follower = styled.Text`
-  color: grey;
-  font-size: 12px;
-`;
+
 //MAIN
 const SmallCircleCard: React.FC<ICircleProject> = ({ title }) => {
   //

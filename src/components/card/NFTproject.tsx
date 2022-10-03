@@ -24,7 +24,7 @@ interface ISquareCard {
 }
 //CSS
 const Container = styled.View`
-  background-color: black;
+  background-color: ${(props) => props.theme.Bg0dp};
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -37,11 +37,11 @@ const ProjectLogo = styled.Image`
 `;
 const ProjectName = styled.Text`
   font-size: 18px;
-  color: white;
+  color: ${(props) => props.theme.Text0dp};
 `;
 const ProjectBy = styled.Text`
   font-size: 12px;
-  color: #c6c6c6;
+  color: ${(props) => props.theme.Text1dp};
 `;
 const SubscribeBtn = styled.TouchableOpacity`
   justify-content: space-between;
@@ -135,7 +135,12 @@ const NFTproject: React.FC<ISquareCard> = ({
           {/* <SubscribeBtn onPress={onClick}> */}
           {/* {isSubscribed ? ( */}
           {subscribedProject.includes(`${queryTitle}`) ? (
-            <AntDesign name="star" size={24} color="white" />
+            <AntDesign
+              name="star"
+              size={24}
+              color="white"
+              // color={`${(props) => props.theme.Bg0dp}`}
+            />
           ) : (
             <AntDesign name="staro" size={24} color="white" />
           )}

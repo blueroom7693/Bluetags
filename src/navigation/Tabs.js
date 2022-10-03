@@ -25,6 +25,10 @@ import { faHexagonVerticalNft } from "@fortawesome/pro-light-svg-icons";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import NFT from "../screens/NFT";
 import Home from "../screens/Home";
+import { useContext } from "react";
+import { ThemeContext } from "styled-components/native";
+import * as NavigationBar from "expo-navigation-bar";
+
 DrawerActions;
 
 const DrawerBtnContainer = styled.View`
@@ -56,39 +60,42 @@ function LogoTitle() {
     />
   );
 }
-
 const Tabs = () => {
+  const theme = useContext(ThemeContext);
+  NavigationBar.setBackgroundColorAsync(`${theme.Tabbar}`);
+
   const isDark = useColorScheme() === "dark";
   const isTabBar = useRecoilValue(isBottomFilter);
   return (
     <Tab.Navigator
       sceneContainerStyle={{
-        backgroundColor: isDark ? BLACK_COLOR : BLACK_COLOR,
+        backgroundColor: `${theme.Bg0dp}`,
+        // isDark ? BLACK_COLOR : BLACK_COLOR,
       }}
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: isDark ? LIGHT_GREY : "#212121",
+          backgroundColor: `${theme.Tabbar}`,
           height: 50,
           position: "absolute",
-          borderTopWidth: 1,
+          // borderTopWidth: 1,
           borderTopColor: LIGHT_GREY,
           display: isTabBar ? "none" : "flex",
         },
-        tabBarActiveTintColor: isDark ? YELLOW_COLOR : BLUE,
-        tabBarInactiveTintColor: isDark ? DARK_GREY : WHITE,
+        tabBarActiveTintColor: `${theme.TabbarActive}`,
+        tabBarInactiveTintColor: `${theme.TabbarInactive}`,
         headerStyle: {
-          backgroundColor: isDark ? BLACK_COLOR : BLACK_COLOR,
+          backgroundColor: `${theme.Bg0dp}`,
         },
         headerTitleStyle: {
-          color: isDark ? "white" : "white",
+          color: `${theme.Text0dp}`,
         },
         tabBarLabelStyle: {
           marginTop: -5,
           fontSize: 10,
-          fontWeight: "600",
+          fontWeight: "400",
         },
         headerShown: true,
-        // tabBarShowLabel: false,
+        tabBarShowLabel: false,
       }}
     >
       <Tab.Screen

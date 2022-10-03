@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import { Text, useColorScheme, View, Appearance } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
@@ -23,7 +23,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getUserStored } from "./src/async";
 import { getAllNft, IData } from "./src/axios";
 import * as NavigationBar from "expo-navigation-bar";
-NavigationBar.setBackgroundColorAsync("#212121");
+import { ThemeContext } from "styled-components/native";
+// NavigationBar.setBackgroundColorAsync("#1f1f1f");
 
 SplashScreen.preventAutoHideAsync();
 
@@ -48,13 +49,6 @@ export default function App() {
           console.log(token);
           setIsLogin(true);
           setUserToken(token);
-          //데이터 한번에 받아오기
-          //query
-          // const { isLoading: isLoadingNft, data: NftData } = useQuery<IInfo>(
-          //   ["homeInfo"],
-          //   getAllNft
-          // );
-          // console.log(NftData);
         }
       } catch (e) {
         console.warn(e);

@@ -16,17 +16,17 @@ const ProjectLogo = styled.Image`
   border-radius: 100px;
 `;
 const Container = styled.View`
-  background-color: black;
+  background-color: ${(props) => props.theme.Bg0dp};
   justify-content: center;
   align-items: center;
   margin-top: 20px;
 `;
 const Title = styled.Text`
-  color: white;
+  color: ${(props) => props.theme.Text0dp};
   font-size: 15px;
 `;
 const Follower = styled.Text`
-  color: grey;
+  color: ${(props) => props.theme.Text1dp};
   font-size: 12px;
 `;
 //MAIN
