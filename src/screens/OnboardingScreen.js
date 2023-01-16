@@ -1,53 +1,81 @@
 import React from "react";
-import {
-  SafeAreaView,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-} from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import styled from "styled-components/native";
-import { BlurView, VibrancyView } from "@react-native-community/blur";
-import Gaming from "../assets/images/misc/gaming.svg";
-import { BLACK_COLOR } from "../colors";
 import { useContext } from "react";
 import { ThemeContext } from "styled-components/native";
 
 const Container = styled.View`
   flex: 1;
   flex-direction: column;
-`;
-
-const BgImg = styled.Image`
-  height: 1000px;
-`;
-
-const StartButton = styled.TouchableOpacity`
-  background-color: ${(props) => props.theme.Bg1dp};
-  /* width: 40%; */
-  /* justify-content: space-between; */
-  border-radius: 20px;
-  flex-direction: row;
   align-items: center;
-  width: 100px;
-  height: 50px;
+  justify-content: space-between;
 `;
-
-const ButtonMessage = styled.Text`
-  font-size: 18px;
-  color: #fff;
+const ImageContainer = styled.View`
+  width: 350px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+  margin-top: 150px;
+`;
+const BgImg = styled.Image`
+  width: 350px;
+  height: 330px;
+  border-radius: 20px;
+`;
+const WelcomeBox = styled.View`
+  flex-direction: column;
+  width: 350px;
+  margin-bottom: 100px;
+`;
+const Welcome = styled.Text`
+  font-size: 26px;
+  font-weight: 300;
+  letter-spacing: -1px;
+  color: ${(props) => props.theme.Text0dp};
+  text-align: left;
+  line-height: 24px;
+  padding-bottom: 10px;
+`;
+const WelcomeSub = styled.Text`
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: -1px;
+  color: ${(props) => props.theme.Text0dp};
+  text-align: left;
+  line-height: 16px;
 `;
 
 const ButtonContainer = styled.View`
-  flex-direction: row;
-  flex: 0.25;
-  height: 200px;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  margin-bottom: 50px;
 `;
-const ImageContainer = styled.View`
-  flex: 1;
+const StartButton1 = styled.TouchableOpacity`
+  background-color: ${(props) => props.theme.Primary0dp};
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 350px;
+  height: 40px;
+  margin-bottom: 10px;
+`;
+const StartButton2 = styled.TouchableOpacity`
+  background-color: ${(props) => props.theme.Secondary0dp};
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 350px;
+  height: 40px;
+  margin-bottom: 5px;
+`;
+
+const ButtonMessage = styled.Text`
+  font-size: 12px;
+  color: ${(props) => props.theme.BtnInner};
+  font-style: normal;
+  font-weight: 700;
 `;
 
 const OnboardingScreen = ({ navigation }) => {
@@ -63,15 +91,20 @@ const OnboardingScreen = ({ navigation }) => {
             }}
           />
         </ImageContainer>
+        <WelcomeBox>
+          <Welcome>Welcome!</Welcome>
+          <WelcomeSub>
+            Welcome to Polytrip! Log in to the service now and start a new
+            journey!
+          </WelcomeSub>
+        </WelcomeBox>
         <ButtonContainer>
-          <StartButton onPress={() => navigation.navigate("Login")}>
+          <StartButton1 onPress={() => navigation.navigate("Login")}>
             <ButtonMessage>Sign in</ButtonMessage>
-            {/* <MaterialIcons name="arrow-forward-ios" size={22} color="#fff" /> */}
-          </StartButton>
-          <StartButton onPress={() => navigation.navigate("Register")}>
-            <ButtonMessage>Sign up</ButtonMessage>
-            {/* <MaterialIcons name="arrow-forward-ios" size={22} color="#fff" /> */}
-          </StartButton>
+          </StartButton1>
+          <StartButton2 onPress={() => navigation.navigate("Register")}>
+            <ButtonMessage>Register</ButtonMessage>
+          </StartButton2>
         </ButtonContainer>
       </Container>
     </SafeAreaView>

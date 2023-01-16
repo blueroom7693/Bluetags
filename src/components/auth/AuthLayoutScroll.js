@@ -7,10 +7,10 @@ import {
 } from "react-native";
 import styled, { ThemeContext } from "styled-components/native";
 
-const Container = styled.View`
+const Container = styled.ScrollView`
   flex: 1;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center; */
+  /* justify-content: center; */
   background-color: ${(props) => props.theme.Bg0dp};
   padding: 0px 20px;
 `;
@@ -23,9 +23,10 @@ const Logo = styled.Image`
   height: 320px;
   margin: 0 auto;
   margin-bottom: 20px;
+  margin-top: 100px;
 `;
 
-export default function AuthLayout({ children }) {
+export default function AuthLayoutScroll({ children }) {
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };

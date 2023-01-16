@@ -1,14 +1,28 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import AuthButton from "../components/auth/AuthButton";
 import AuthLayout from "../components/auth/AuthLayout";
 import { TextInput } from "../components/auth/AuthShared";
 import { axiosInstance } from "../axiosInstance";
-import styled from "styled-components/native";
+import styled, { ThemeContext } from "styled-components/native";
+import AuthLayoutScroll from "../components/auth/AuthLayoutScroll";
 
 const ErrorText = styled.Text`
   color: white;
+  margin-bottom: 10px;
+`;
+const MainText = styled.Text`
+  font-size: 26px;
+  font-weight: 300;
+  color: ${(props) => props.theme.Text0dp};
+  margin-bottom: 48px;
+`;
+
+const SubText = styled.Text`
+  font-size: 12px;
+  font-weight: 700;
+  color: ${(props) => props.theme.Text0dp};
   margin-bottom: 10px;
 `;
 
@@ -20,6 +34,9 @@ interface IForm {
 }
 
 export default function CreateAccount({ navigation }) {
+  //themeprovider
+  const theme = useContext(ThemeContext);
+
   //error
   const [errorMessage, setErrorMessage] = useState("");
   //useform
@@ -69,7 +86,9 @@ export default function CreateAccount({ navigation }) {
   }, [register]);
   //return
   return (
-    <AuthLayout>
+    <AuthLayoutScroll>
+      <MainText>Sign up</MainText>
+      <SubText>E-mail</SubText>
       <TextInput
         placeholder="username"
         returnKeyType="next"
@@ -77,6 +96,8 @@ export default function CreateAccount({ navigation }) {
         placeholderTextColor={"rgba(255, 255, 255, 0.6)"}
         onChangeText={(text) => setValue("username", text)}
       />
+      <SubText>Name</SubText>
+
       <TextInput
         ref={name}
         placeholder="name"
@@ -85,6 +106,7 @@ export default function CreateAccount({ navigation }) {
         placeholderTextColor={"rgba(255, 255, 255, 0.6)"}
         onChangeText={(text) => setValue("name", text)}
       />
+      <SubText>Password</SubText>
       <TextInput
         ref={passwordRef}
         placeholder="password"
@@ -94,6 +116,7 @@ export default function CreateAccount({ navigation }) {
         placeholderTextColor={"rgba(255, 255, 255, 0.6)"}
         onChangeText={(text) => setValue("password", text)}
       />
+      <SubText>Confirm Password</SubText>
       <TextInput
         ref={confirmPasswordRef}
         placeholder="Confirm password"
@@ -116,6 +139,6 @@ export default function CreateAccount({ navigation }) {
           !watch("name")
         }
       />
-    </AuthLayout>
+    </AuthLayoutScroll>
   );
 }

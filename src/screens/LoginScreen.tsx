@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -12,7 +12,7 @@ import { useRecoilState } from "recoil";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 
-import styled from "styled-components/native";
+import styled, { ThemeContext } from "styled-components/native";
 import { logUserIn } from "../async";
 import AuthLayout from "../components/auth/AuthLayout";
 import AuthButton from "../components/auth/AuthButton";
@@ -22,38 +22,43 @@ import GoogleSVG from "../assets/images/misc/google.svg";
 import FacebookSVG from "../assets/images/misc/facebook.svg";
 import TwitterSVG from "../assets/images/misc/twitter.svg";
 
-const InputBox = styled.View`
-  flex-direction: row;
-  border-bottom-color: #ccc;
-  border-bottom-width: 1px;
-  padding-bottom: 8px;
-  margin-bottom: 25px;
+const SubText = styled.Text`
+  font-size: 12px;
+  font-weight: 700;
+  color: ${(props) => props.theme.Text0dp};
+  margin-bottom: 10px;
 `;
-
 const ErrorText = styled.Text`
-  color: white;
+  color: ${(props) => props.theme.Text0dp};
   margin-bottom: 10px;
 `;
 
 const DetailText = styled.Text`
-  color: white;
-  font-size: 14px;
+  color: ${(props) => props.theme.Text0dp};
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration-line: underline;
 `;
 const RegisterText = styled.Text`
-  color: blue;
-  font-size: 14px;
+  color: ${(props) => props.theme.Primary1dp};
+  font-size: 16px;
+  font-weight: 700;
 `;
 const SNSloginBox = styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: center;
   margin: 20px;
+  margin-top: 40px;
 `;
 const SNSlogo = styled.TouchableOpacity`
   margin: 10px;
 `;
 
 const LoginScreen = ({ navigation }) => {
+  //themeprovider
+  const theme = useContext(ThemeContext);
+
   //typescript
   interface IForm {
     username: string;
@@ -107,15 +112,17 @@ const LoginScreen = ({ navigation }) => {
   //return
   return (
     <AuthLayout>
+      <SubText>E-mail</SubText>
       <TextInput
         value={watch("username")}
         placeholder="Username"
         returnKeyType="next"
         autoCapitalize="none"
-        placeholderTextColor={"rgba(255, 255, 255, 0.6)"}
         onSubmitEditing={() => onNext(passwordRef)}
         onChangeText={(text) => setValue("username", text)}
       />
+      <SubText>Password</SubText>
+
       <TextInput
         value={watch("password")}
         ref={passwordRef}
@@ -123,7 +130,6 @@ const LoginScreen = ({ navigation }) => {
         secureTextEntry
         returnKeyType="done"
         lastOne={true}
-        placeholderTextColor={"rgba(255, 255, 255, 0.6)"}
         onSubmitEditing={handleSubmit(onValid)}
         onChangeText={(text) => setValue("password", text)}
       />
@@ -135,9 +141,7 @@ const LoginScreen = ({ navigation }) => {
         disabled={!watch("username") || !watch("password")}
         onPress={handleSubmit(onValid)}
       />
-      <View style={{ alignItems: "center", marginTop: 30 }}>
-        <DetailText>or continue with</DetailText>
-      </View>
+
       <SNSloginBox>
         <SNSlogo onPress={() => {}}>
           <GoogleSVG height={30} width={30} />
@@ -152,14 +156,16 @@ const LoginScreen = ({ navigation }) => {
       <View
         style={{
           flexDirection: "row",
-          justifyContent: "center",
-          marginBottom: 30,
+          justifyContent: "space-between",
+          paddingLeft: 70,
+          paddingRight: 70,
+          paddingTop: 30,
         }}
       >
-        <DetailText>Not a member? </DetailText>
         <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-          <RegisterText> Register now</RegisterText>
+          <RegisterText> Sign up +</RegisterText>
         </TouchableOpacity>
+        <DetailText>Not a member? </DetailText>
       </View>
     </AuthLayout>
   );

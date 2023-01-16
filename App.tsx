@@ -77,8 +77,8 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={isLight ? lightTheme : darkTheme}>
           <NavigationContainer>
-            {isLogin ? <MyDrawer /> : <AuthStack />}
-            {/* <AuthStack /> */}
+            {/* {isLogin ? <MyDrawer /> : <AuthStack />} */}
+            <AuthStack />
             {/* <MyDrawer /> */}
           </NavigationContainer>
         </ThemeProvider>

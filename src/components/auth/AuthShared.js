@@ -1,9 +1,14 @@
 import styled from "styled-components/native";
 
 export const TextInput = styled.TextInput`
-  background-color: rgba(255, 255, 255, 0.15);
-  padding: 15px 7px;
+  background-color: ${(props) => props.theme.Bg0dp};
   border-radius: 4px;
-  color: white;
+  border-width: 1px;
+  width: 350px;
+  height: 40px;
+  border-color: ${(props) => props.theme.Text0dp};
+  color: ${(props) => props.theme.Text0dp};
   margin-bottom: ${(props) => (props.lastOne ? "15" : 15)}px;
+  padding-left: 15px;
+  font-size: 14px;
 `;
