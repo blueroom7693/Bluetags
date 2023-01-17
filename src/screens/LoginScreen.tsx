@@ -23,6 +23,9 @@ import FacebookSVG from "../assets/images/misc/facebook.svg";
 import TwitterSVG from "../assets/images/misc/twitter.svg";
 import useMutation from "../libs/client/useMutation";
 
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
+
 const SubText = styled.Text`
   font-size: 12px;
   font-weight: 700;
@@ -59,7 +62,6 @@ const SNSlogo = styled.TouchableOpacity`
 const LoginScreen = ({ navigation }) => {
   //themeprovider
   const theme = useContext(ThemeContext);
-
   //typescript
   interface IForm {
     email: string;
@@ -69,10 +71,24 @@ const LoginScreen = ({ navigation }) => {
     error?: string;
     auth?: string;
   }
+  //Google Auth
+  // const [request, response, promptAsync] = Google.useAuthRequest({
+  //   expoClientId: "GOOGLE_GUID.apps.googleusercontent.com",
+  //   iosClientId: "GOOGLE_GUID.apps.googleusercontent.com",
+  //   androidClientId: "GOOGLE_GUID.apps.googleusercontent.com",
+  //   webClientId: "GOOGLE_GUID.apps.googleusercontent.com",
+  // });
+
+  // React.useEffect(() => {
+  //   if (response?.type === "success") {
+  //     const { authentication } = response;
+  //   }
+  // }, [response]);
+
   //useMutation
-  // const [login, { loading, data, error, status }] = useMutation<LoginResponse>(
-  //   "https://www.bluetags.app/api/users/sign-in"
-  // );
+  const [login, { loading, data, error, status }] = useMutation<LoginResponse>(
+    "https://www.bluetags.app/api/users/sign-in"
+  );
   //setError
   const [errorMessage, setErrorMessage] = useState("");
   //useRecoil
@@ -90,17 +106,27 @@ const LoginScreen = ({ navigation }) => {
       email,
       password,
     };
-    axios
-      .post("https://www.bluetags.app/api/users/sign-in", body)
-      .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          setIsLogin(true);
-          //async storage
-          logUserIn(response);
-        }
-      })
-      .catch((error) => setErrorMessage(error.response.data.error));
+    // axios
+    //   .post("https://www.bluetags.app/api/users/sign-in", body)
+    //   .then((response) => {
+    //     console.log(response);
+    //     if (response.status === 200) {
+    //       setIsLogin(true);
+    //       //async storage
+    //       logUserIn(response);
+    //     }
+    //   })
+    //   .catch((error) => setErrorMessage(error.response.data.error));
+    //// New Method Login
+    if (loading) return;
+    login(body);
+    console.log(data);
+    if (status === 200) {
+      setIsLogin(true);
+      //async storage
+      logUserIn(data);
+    }
+    setErrorMessage(error);
   };
   // reference
   const passwordRef = useRef();

@@ -1,17 +1,15 @@
 import React, { useContext, useRef, useState } from "react";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import AuthButton from "../components/auth/AuthButton";
-import AuthLayout from "../components/auth/AuthLayout";
 import { TextInput } from "../components/auth/AuthShared";
-import { axiosInstance } from "../axiosInstance";
 import styled, { ThemeContext } from "styled-components/native";
 import AuthLayoutScroll from "../components/auth/AuthLayoutScroll";
+import useMutation from "../libs/client/useMutation";
+import { User } from "../utils/type";
+import Checkbox from "expo-checkbox";
 
-const ErrorText = styled.Text`
-  color: white;
-  margin-bottom: 10px;
-`;
 const MainText = styled.Text`
   font-size: 26px;
   font-weight: 300;
@@ -26,21 +24,108 @@ const SubText = styled.Text`
   margin-bottom: 10px;
 `;
 
-interface IForm {
-  username: string;
+const ErrorText = styled.Text`
+  color: ${(props) => props.theme.Text0dp};
+  margin-bottom: 10px;
+`;
+
+const TermBox = styled.View`
+  flex-direction: row;
+  width: 300px;
+  margin: 5px;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const TermText = styled.Text`
+  color: ${(props) => props.theme.Text0dp};
+  font-size: 11px;
+  font-weight: 400;
+`;
+//Typescript
+
+interface EnterForm {
+  email: string;
   name: string;
   password: string;
   confirm_password: string;
 }
 
+interface EnterResponse {
+  user: User;
+  error?: {
+    email: string;
+    password: string;
+    confirm_password: string;
+    name: string;
+  };
+}
+
+interface ErrorResponse {
+  email: string;
+  name: string;
+  password: string;
+  confirm_password: string;
+}
+
+interface UserResponse {
+  data: User;
+}
+
 export default function CreateAccount({ navigation }) {
+  //Use Mutation
+  const [enter, { loading, data, error, status }] = useMutation<
+    EnterResponse,
+    ErrorResponse
+  >("https://www.bluetags.app/api/users/sign-up");
+
+  const [
+    socialLogin,
+    {
+      loading: socialLoading,
+      data: socialData,
+      error: socialError,
+      status: socialStatus,
+    },
+  ] = useMutation("https://www.bluetags.app/api/users/sign-in/social/google");
+  //isChecked
+  const [isChecked1, setChecked1] = useState(false);
+  const [isChecked2, setChecked2] = useState(false);
   //themeprovider
   const theme = useContext(ThemeContext);
-
-  //error
-  const [errorMessage, setErrorMessage] = useState("");
   //useform
-  const { register, handleSubmit, setValue, watch } = useForm<IForm>();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    setError,
+    formState: { errors },
+  } = useForm<EnterForm>();
+  console.log(errors);
+  //error
+  // const [errorMessage, setErrorMessage] = useState("");
+  useEffect(() => {
+    if (error) {
+      if (error.confirm_password) {
+        setError("confirm_password", { message: error.confirm_password });
+      }
+      if (error.email) {
+        setError("email", { message: error.email });
+      }
+      if (error.password) {
+        setError("password", { message: error.password });
+      }
+      if (error.name) {
+        setError("name", { message: error.name });
+      }
+    }
+    if (status === 200) {
+      // auth({ email: data?.user.email });
+      // router.push("/signup/auth");
+    }
+  }, [data, error, status, setError]);
+
   //reference
   const name = useRef();
   const passwordRef = useRef();
@@ -50,28 +135,16 @@ export default function CreateAccount({ navigation }) {
     nextOne?.current?.focus();
   };
   //submit
-  const onValid = ({ username, name, password, confirm_password }: IForm) => {
-    const body = {
-      username,
-      name,
-      password,
-      confirm_password,
-    };
-    console.log("submitted");
-    console.log(body);
-    axiosInstance
-      .post("/api/v1/user/join", body)
-      .then((response) => {
-        if (response.status === 200) {
-          navigation.navigate("Login");
-          console.log("hi");
-        }
-      })
-      .catch((error) => setErrorMessage(error.response.data));
+  const onValid = (validForm: EnterForm) => {
+    if (loading) return;
+    enter(validForm);
+    console.log(data);
+    console.log(status);
+    console.log(loading);
   };
   //register
   useEffect(() => {
-    register("username", {
+    register("email", {
       required: true,
     });
     register("name", {
@@ -90,14 +163,14 @@ export default function CreateAccount({ navigation }) {
       <MainText>Sign up</MainText>
       <SubText>E-mail</SubText>
       <TextInput
-        placeholder="username"
+        placeholder="email"
         returnKeyType="next"
         onSubmitEditing={() => onNext(name)}
         placeholderTextColor={"rgba(255, 255, 255, 0.6)"}
-        onChangeText={(text) => setValue("username", text)}
+        onChangeText={(text) => setValue("email", text)}
       />
+      <ErrorText>{errors.email?.message}</ErrorText>
       <SubText>Name</SubText>
-
       <TextInput
         ref={name}
         placeholder="name"
@@ -106,6 +179,7 @@ export default function CreateAccount({ navigation }) {
         placeholderTextColor={"rgba(255, 255, 255, 0.6)"}
         onChangeText={(text) => setValue("name", text)}
       />
+      <ErrorText>{errors.name?.message}</ErrorText>
       <SubText>Password</SubText>
       <TextInput
         ref={passwordRef}
@@ -116,6 +190,7 @@ export default function CreateAccount({ navigation }) {
         placeholderTextColor={"rgba(255, 255, 255, 0.6)"}
         onChangeText={(text) => setValue("password", text)}
       />
+      <ErrorText>{errors.password?.message}</ErrorText>
       <SubText>Confirm Password</SubText>
       <TextInput
         ref={confirmPasswordRef}
@@ -127,13 +202,37 @@ export default function CreateAccount({ navigation }) {
         onChangeText={(text) => setValue("confirm_password", text)}
         onSubmitEditing={handleSubmit(onValid)}
       />
-      <ErrorText>{errorMessage}</ErrorText>
+      <ErrorText>{errors.confirm_password?.message}</ErrorText>
+      <TermBox>
+        <Checkbox
+          style={styles.checkbox}
+          value={isChecked1}
+          onValueChange={setChecked1}
+          color={isChecked1 ? "#0075ff" : undefined}
+        />
+        <TermText>
+          This site is protected by reCAPTCHA and the Google Privacy Policy and
+          Terms of Service apply.
+        </TermText>
+      </TermBox>
+      <TermBox>
+        <Checkbox
+          style={styles.checkbox}
+          value={isChecked2}
+          onValueChange={setChecked2}
+          color={isChecked2 ? "#0075ff" : undefined}
+        />
+        <TermText>
+          Creating an account means you are okay with our Terms of Service,
+          Privacy Policy, and our default Notification Settings.
+        </TermText>
+      </TermBox>
       <AuthButton
         text="Create Account"
         disabled={false}
         onPress={handleSubmit(onValid)}
         disabled={
-          !watch("username") ||
+          !watch("email") ||
           !watch("password") ||
           !watch("confirm_password") ||
           !watch("name")
@@ -142,3 +241,8 @@ export default function CreateAccount({ navigation }) {
     </AuthLayoutScroll>
   );
 }
+const styles = StyleSheet.create({
+  checkbox: {
+    marginRight: 10,
+  },
+});
