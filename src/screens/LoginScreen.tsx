@@ -21,6 +21,7 @@ import { TextInput } from "../components/auth/AuthShared";
 import GoogleSVG from "../assets/images/misc/google.svg";
 import FacebookSVG from "../assets/images/misc/facebook.svg";
 import TwitterSVG from "../assets/images/misc/twitter.svg";
+import useMutation from "../libs/client/useMutation";
 
 const SubText = styled.Text`
   font-size: 12px;
@@ -61,9 +62,17 @@ const LoginScreen = ({ navigation }) => {
 
   //typescript
   interface IForm {
-    username: string;
+    email: string;
     password: string;
   }
+  interface LoginResponse {
+    error?: string;
+    auth?: string;
+  }
+  //useMutation
+  // const [login, { loading, data, error, status }] = useMutation<LoginResponse>(
+  //   "https://www.bluetags.app/api/users/sign-in"
+  // );
   //setError
   const [errorMessage, setErrorMessage] = useState("");
   //useRecoil
@@ -76,23 +85,22 @@ const LoginScreen = ({ navigation }) => {
     watch,
     formState: { errors },
   } = useForm<IForm>();
-  const onValid = ({ username, password }: IForm) => {
+  const onValid = ({ email, password }: IForm) => {
     const body = {
-      username,
+      email,
       password,
     };
     axios
-      .post("https://blueroom-info.herokuapp.com/api/v1/user/login", body)
+      .post("https://www.bluetags.app/api/users/sign-in", body)
       .then((response) => {
-        axios.defaults.headers.common["Authorization"] =
-          "Bearer " + response.data.accessToken;
+        console.log(response);
         if (response.status === 200) {
           setIsLogin(true);
           //async storage
           logUserIn(response);
         }
       })
-      .catch((error) => setErrorMessage(error.response.data));
+      .catch((error) => setErrorMessage(error.response.data.error));
   };
   // reference
   const passwordRef = useRef();
@@ -102,7 +110,7 @@ const LoginScreen = ({ navigation }) => {
   };
   // register
   useEffect(() => {
-    register("username", {
+    register("email", {
       required: true,
     });
     register("password", {
@@ -114,12 +122,12 @@ const LoginScreen = ({ navigation }) => {
     <AuthLayout>
       <SubText>E-mail</SubText>
       <TextInput
-        value={watch("username")}
-        placeholder="Username"
+        value={watch("email")}
+        placeholder="email"
         returnKeyType="next"
         autoCapitalize="none"
         onSubmitEditing={() => onNext(passwordRef)}
-        onChangeText={(text) => setValue("username", text)}
+        onChangeText={(text) => setValue("email", text)}
       />
       <SubText>Password</SubText>
 
@@ -138,7 +146,7 @@ const LoginScreen = ({ navigation }) => {
       <AuthButton
         text="Log In"
         // loading={loading}
-        disabled={!watch("username") || !watch("password")}
+        disabled={!watch("email") || !watch("password")}
         onPress={handleSubmit(onValid)}
       />
 
