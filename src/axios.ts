@@ -31,7 +31,7 @@ export function getNftInfo(nft: string) {
 }
 
 export function getAllNft() {
-  const data = axiosInstance.get("/api/v1/nft/all");
+  const data = axiosInstance.get("/api/bluecards");
 
   return data;
 }

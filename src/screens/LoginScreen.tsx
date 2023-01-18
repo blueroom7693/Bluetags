@@ -25,6 +25,8 @@ import useMutation from "../libs/client/useMutation";
 
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
+import { getAllNft } from "../axios";
+import { useQuery } from "@tanstack/react-query";
 
 const SubText = styled.Text`
   font-size: 12px;
@@ -154,11 +156,10 @@ const LoginScreen = ({ navigation }) => {
     }
     setErrorMessage(error);
   };
-
+  console.log(data);
   //social login
   useEffect(() => {
     if (user && !socialLoading) {
-      // socialLogin(user);
       socialLogin({ name: user.name, email: user.email, image: user.picutre });
     }
     console.log(socialData);
@@ -182,6 +183,26 @@ const LoginScreen = ({ navigation }) => {
     });
   }, [register]);
 
+  //userCheck
+  //user check
+  useEffect(() => {
+    axios.get("https://www.bluetags.app/api/users/check").then((response) => {
+      if (response.data) {
+        console.log(response);
+        setIsLogin(true);
+      }
+    });
+  }, [status, socialStatus]);
+  //
+  const { isLoading: isLoadingNft, data: NftData } = useQuery(
+    ["homeInfo"],
+    getAllNft
+  );
+  if (!isLoadingNft) {
+    // console.log(Object.values(NftData.data));
+    // console.log(Object.values(NftData.data)[0][3].title);
+    console.log(Object.values(NftData.data.bluecards)[2].id);
+  }
   //RETURN
   return (
     <AuthLayout>
