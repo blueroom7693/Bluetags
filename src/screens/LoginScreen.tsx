@@ -71,20 +71,37 @@ const LoginScreen = ({ navigation }) => {
     error?: string;
     auth?: string;
   }
+  //
+  const [user, setUser] = React.useState(null);
+  const [accessToken, setAccessToken] = React.useState(null);
   //Google Auth
-  // const [request, response, promptAsync] = Google.useAuthRequest({
-  //   expoClientId: "GOOGLE_GUID.apps.googleusercontent.com",
-  //   iosClientId: "GOOGLE_GUID.apps.googleusercontent.com",
-  //   androidClientId: "GOOGLE_GUID.apps.googleusercontent.com",
-  //   webClientId: "GOOGLE_GUID.apps.googleusercontent.com",
-  // });
+  WebBrowser.maybeCompleteAuthSession();
 
-  // React.useEffect(() => {
-  //   if (response?.type === "success") {
-  //     const { authentication } = response;
-  //   }
-  // }, [response]);
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    expoClientId:
+      "372775712005-skoe316ceiohdurrpil0k9r8la42hpl3.apps.googleusercontent.com",
+    // iosClientId: "GOOGLE_GUID.apps.googleusercontent.com",
+    // androidClientId: "GOOGLE_GUID.apps.googleusercontent.com",
+    // webClientId: "GOOGLE_GUID.apps.googleusercontent.com",
+  });
 
+  React.useEffect(() => {
+    if (response?.type === "success") {
+      const { authentication } = response;
+      console.log(response.authentication.accessToken);
+      setAccessToken(response.authentication.accessToken);
+      accessToken && fetchUserInfo();
+      console.log(user);
+    }
+  }, [response]);
+
+  async function fetchUserInfo() {
+    let response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    const useInfo = await response.json();
+    setUser(useInfo);
+  }
   //useMutation
   const [login, { loading, data, error, status }] = useMutation<LoginResponse>(
     "https://www.bluetags.app/api/users/sign-in"
@@ -177,7 +194,12 @@ const LoginScreen = ({ navigation }) => {
       />
 
       <SNSloginBox>
-        <SNSlogo onPress={() => {}}>
+        <SNSlogo
+          disabled={!request}
+          onPress={() => {
+            promptAsync();
+          }}
+        >
           <GoogleSVG height={30} width={30} />
         </SNSlogo>
         <SNSlogo onPress={() => {}}>
