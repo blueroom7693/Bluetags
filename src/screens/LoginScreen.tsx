@@ -71,12 +71,14 @@ const LoginScreen = ({ navigation }) => {
     error?: string;
     auth?: string;
   }
-  //
+
+  //Google Auth
+  //setUser,setToken
   const [user, setUser] = React.useState(null);
   const [accessToken, setAccessToken] = React.useState(null);
-  //Google Auth
+  //
   WebBrowser.maybeCompleteAuthSession();
-
+  //Request
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId:
       "372775712005-skoe316ceiohdurrpil0k9r8la42hpl3.apps.googleusercontent.com",
@@ -85,16 +87,20 @@ const LoginScreen = ({ navigation }) => {
     // webClientId: "GOOGLE_GUID.apps.googleusercontent.com",
   });
 
+  //Response
   React.useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response;
-      console.log(response.authentication.accessToken);
+      // console.log(response.authentication.accessToken);
       setAccessToken(response.authentication.accessToken);
       accessToken && fetchUserInfo();
-      console.log(user);
+      // console.log(user);
+      //social login
+      // socialLogin({ name: user.name, email: user.email, image: user.picutre });
     }
   }, [response]);
 
+  //FetchUserInfo
   async function fetchUserInfo() {
     let response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
       headers: { Authorization: `Bearer ${accessToken}` },
@@ -102,10 +108,22 @@ const LoginScreen = ({ navigation }) => {
     const useInfo = await response.json();
     setUser(useInfo);
   }
+
   //useMutation
   const [login, { loading, data, error, status }] = useMutation<LoginResponse>(
     "https://www.bluetags.app/api/users/sign-in"
   );
+
+  const [
+    socialLogin,
+    {
+      loading: socialLoading,
+      data: socialData,
+      error: socialError,
+      status: socialStatus,
+    },
+  ] = useMutation("https://www.bluetags.app/api/users/sign-in/social/google");
+
   //setError
   const [errorMessage, setErrorMessage] = useState("");
   //useRecoil
@@ -118,23 +136,14 @@ const LoginScreen = ({ navigation }) => {
     watch,
     formState: { errors },
   } = useForm<IForm>();
+
+  //onValid
   const onValid = ({ email, password }: IForm) => {
     const body = {
       email,
       password,
     };
-    // axios
-    //   .post("https://www.bluetags.app/api/users/sign-in", body)
-    //   .then((response) => {
-    //     console.log(response);
-    //     if (response.status === 200) {
-    //       setIsLogin(true);
-    //       //async storage
-    //       logUserIn(response);
-    //     }
-    //   })
-    //   .catch((error) => setErrorMessage(error.response.data.error));
-    //// New Method Login
+    // New Method Login
     if (loading) return;
     login(body);
     console.log(data);
@@ -145,12 +154,24 @@ const LoginScreen = ({ navigation }) => {
     }
     setErrorMessage(error);
   };
+
+  //social login
+  useEffect(() => {
+    if (user && !socialLoading) {
+      // socialLogin(user);
+      socialLogin({ name: user.name, email: user.email, image: user.picutre });
+    }
+    console.log(socialData);
+  }, [user]);
+
   // reference
   const passwordRef = useRef();
+
   // onNext
   const onNext = (nextOne) => {
     nextOne?.current?.focus();
   };
+
   // register
   useEffect(() => {
     register("email", {
@@ -160,7 +181,8 @@ const LoginScreen = ({ navigation }) => {
       required: true,
     });
   }, [register]);
-  //return
+
+  //RETURN
   return (
     <AuthLayout>
       <SubText>E-mail</SubText>
