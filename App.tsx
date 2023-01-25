@@ -45,6 +45,7 @@ export default function App() {
         await Font.loadAsync(Entypo.font);
         // async storage 토큰 확인
         const token = JSON.parse(await AsyncStorage.getItem("sangwan"));
+        // console.log(token);
         if (token !== (undefined || null)) {
           console.log(token);
           setIsLogin(true);
@@ -77,8 +78,8 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={isLight ? lightTheme : darkTheme}>
           <NavigationContainer>
-            {/* {isLogin ? <MyDrawer /> : <AuthStack />} */}
-            <AuthStack />
+            {isLogin ? <MyDrawer /> : <AuthStack />}
+            {/* <AuthStack /> */}
             {/* <MyDrawer /> */}
           </NavigationContainer>
         </ThemeProvider>

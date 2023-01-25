@@ -88,17 +88,17 @@ const LoginScreen = ({ navigation }) => {
     // androidClientId: "GOOGLE_GUID.apps.googleusercontent.com",
     // webClientId: "GOOGLE_GUID.apps.googleusercontent.com",
   });
+  // console.log(response);
+  // console.log(request);
 
   //Response
   React.useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response;
-      // console.log(response.authentication.accessToken);
       setAccessToken(response.authentication.accessToken);
       accessToken && fetchUserInfo();
-      // console.log(user);
-      //social login
-      // socialLogin({ name: user.name, email: user.email, image: user.picutre });
+      console.log("okay");
+      console.log(accessToken);
     }
   }, [response]);
 
@@ -107,15 +107,17 @@ const LoginScreen = ({ navigation }) => {
     let response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
-    const useInfo = await response.json();
-    setUser(useInfo);
+    const userInfo = await response.json();
+    console.log(userInfo);
+    setUser(userInfo);
   }
 
-  //useMutation
+  //*useMutation
+  //login
   const [login, { loading, data, error, status }] = useMutation<LoginResponse>(
     "https://www.bluetags.app/api/users/sign-in"
   );
-
+  //--sociallogin
   const [
     socialLogin,
     {
@@ -125,12 +127,31 @@ const LoginScreen = ({ navigation }) => {
       status: socialStatus,
     },
   ] = useMutation("https://www.bluetags.app/api/users/sign-in/social/google");
+  //--logout
 
-  //setError
+  const [
+    logOut,
+    { data: logoutData, loading: logoutLoading, status: logoutStatus },
+  ] = useMutation("https://www.bluetags.app/api/users/sign-out");
+
+  function logoutFun() {
+    logOut({});
+
+    console.log("logout result is:");
+    console.log(logoutStatus);
+
+    console.log("result is:");
+    axios
+      .get("https://www.bluetags.app/api/users")
+      .then((res) => console.log(res.data));
+    setUser(null);
+  }
+
+  //*setError
   const [errorMessage, setErrorMessage] = useState("");
-  //useRecoil
+  //*useRecoil
   const [isLogin, setIsLogin] = useRecoilState(isLogined);
-  //useForm
+  //*useForm
   const {
     register,
     setValue,
@@ -148,15 +169,15 @@ const LoginScreen = ({ navigation }) => {
     // New Method Login
     if (loading) return;
     login(body);
-    console.log(data);
     if (status === 200) {
       setIsLogin(true);
+      console.log("login result is :");
       //async storage
       logUserIn(data);
     }
     setErrorMessage(error);
   };
-  console.log(data);
+
   //social login
   useEffect(() => {
     if (user && !socialLoading) {
@@ -183,25 +204,31 @@ const LoginScreen = ({ navigation }) => {
     });
   }, [register]);
 
-  //userCheck
-  //user check
+  //usercheck
   useEffect(() => {
     axios.get("https://www.bluetags.app/api/users/check").then((response) => {
+      console.log(response.data);
       if (response.data) {
-        console.log(response);
+        console.log("user ON");
+        // console.log(response.data.email);
+        // console.log(response.data);
         setIsLogin(true);
+      } else {
+        console.log("user OFF");
+        setIsLogin(false);
       }
     });
   }, [status, socialStatus]);
+
   //
   const { isLoading: isLoadingNft, data: NftData } = useQuery(
     ["homeInfo"],
     getAllNft
   );
   if (!isLoadingNft) {
+    // console.log(Object.values(NftData.data.bluecards)[2].id);
     // console.log(Object.values(NftData.data));
-    // console.log(Object.values(NftData.data)[0][3].title);
-    console.log(Object.values(NftData.data.bluecards)[2].id);
+    // console.log(Object.values(NftData.data.bluecards)[2].project.chain);
   }
   //RETURN
   return (
@@ -263,6 +290,9 @@ const LoginScreen = ({ navigation }) => {
       >
         <TouchableOpacity onPress={() => navigation.navigate("Register")}>
           <RegisterText> Sign up +</RegisterText>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => logoutFun()}>
+          <RegisterText> logout</RegisterText>
         </TouchableOpacity>
         <DetailText>Not a member? </DetailText>
       </View>

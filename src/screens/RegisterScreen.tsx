@@ -88,6 +88,9 @@ export default function CreateAccount({ navigation }) {
       status: socialStatus,
     },
   ] = useMutation("https://www.bluetags.app/api/users/sign-in/social/google");
+
+  const [auth, {}] = useMutation("/api/users/sign-up/auth");
+
   //isChecked
   const [isChecked1, setChecked1] = useState(false);
   const [isChecked2, setChecked2] = useState(false);
@@ -121,8 +124,8 @@ export default function CreateAccount({ navigation }) {
       }
     }
     if (status === 200) {
-      // auth({ email: data?.user.email });
-      // router.push("/signup/auth");
+      console.log(data?.user.email);
+      auth({ email: data?.user.email });
     }
   }, [data, error, status, setError]);
 

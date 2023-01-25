@@ -44,6 +44,7 @@ interface IData {
   likes: [string];
   unlikes: [string];
   SNS: string;
+  bluecards: Object;
 }
 
 export interface IInfo {
@@ -68,16 +69,18 @@ export const HListSeparator = styled.View`
   background-color: ${(props) => props.theme.Bg0dp};
 `;
 const HeaderTitle = styled.Text`
-  font-size: 24px;
+  font-size: 16px;
   color: ${(props) => props.theme.Text0dp};
   margin-left: 30px;
-  font-weight: 800;
+  font-weight: 700;
+  opacity: 0.5;
+  margin-bottom: 16px;
 `;
 const SubHeaderTitle = styled.Text`
-  font-size: 18px;
+  font-size: 26px;
   color: ${(props) => props.theme.Text1dp};
   margin-left: 30px;
-  margin-bottom: -8px;
+  margin-bottom: 3px;
   margin-top: 35px;
 `;
 
@@ -135,15 +138,16 @@ export default function Home() {
 
   useEffect(() => {
     if (!isLoadingNft) {
-      setData(Object.values(NftData.data));
+      setData(Object.values(NftData.data.bluecards));
     }
+    console.log(data);
   }, [isLoadingNft, NftData]);
 
-  useEffect(() => {
-    if (!isLoadingNft) {
-      setData(Object.values(NftData?.data).filter(filter));
-    }
-  }, [chain, project, sns, today, past, subscribe, NftData]);
+  // useEffect(() => {
+  //   if (!isLoadingNft) {
+  //     setData(Object.values(NftData?.data).filter(filter));
+  //   }
+  // }, [chain, project, sns, today, past, subscribe, NftData]);
   //RETURN
   return isLoadingNft ? null : (
     <SafeAreaView style={styles.container}>
@@ -155,18 +159,20 @@ export default function Home() {
         <HeaderTitle>Recommended Article</HeaderTitle>
         <NFTList
           data={data}
-          keyExtractor={(item) => item._id}
+          keyExtractor={(item) => item.id}
           horizontal={true}
           ItemSeparatorComponent={HListSeparator}
           contentContainerStyle={{ paddingHorizontal: 20 }}
           renderItem={({ item }) => (
             <SquareCard
               createdAt={item.createdAt}
-              nft={item.nft}
+              nft={item.project.title}
               thumbnail={item.thumbnail}
               title={item.title}
-              chain={item.chain}
-              SNS={item.SNS}
+              chain={item.project.chain}
+              SNS={item.sns}
+              projectlogo={item.project.logoUrl}
+              description={item.description}
               fullData={item}
             ></SquareCard>
           )}
@@ -174,7 +180,7 @@ export default function Home() {
         {/* RECOMMEDED PROJECT FLATLIST */}
         <SubHeaderTitle>for you</SubHeaderTitle>
         <HeaderTitle>Recommended Project</HeaderTitle>
-        <NFTList
+        {/* <NFTList
           data={AllNft}
           keyExtractor={(item) => item.title}
           horizontal={true}
@@ -188,11 +194,11 @@ export default function Home() {
               logo={item.logourl}
             ></CircleCard>
           )}
-        />
+        /> */}
         {/* RECOMMEDED ARTICLE FLATLIST */}
         <SubHeaderTitle>start with tags</SubHeaderTitle>
         <HeaderTitle>Recommended Article</HeaderTitle>
-        <NFTList
+        {/* <NFTList
           data={data}
           keyExtractor={(item) => item._id}
           horizontal={true}
@@ -210,7 +216,7 @@ export default function Home() {
               fullData={item}
             ></SquareCard>
           )}
-        />
+        /> */}
       </HomeContainer>
       <BottomFilter />
     </SafeAreaView>
