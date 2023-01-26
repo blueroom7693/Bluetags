@@ -54,9 +54,15 @@ const HeaderLogo = styled.Image`
 function LogoTitle() {
   return (
     <HeaderLogo
-      source={{
-        uri: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Logo_Blue_on_Transparent.png",
+      // source={{ uri: "../assets/images/Frame.png", width: 40, height: 40 }}
+      source={require("../assets/images/Frame.png")}
+      style={{
+        width: 85,
+        resizeMode: "contain",
+        // height: 51,
       }}
+
+      // src="../assets/images/Frame.png"
     />
   );
 }

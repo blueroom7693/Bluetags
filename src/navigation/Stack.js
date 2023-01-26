@@ -1,15 +1,16 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { BLACK_COLOR, LIGHT_GREY } from "../colors";
-import { Text, TouchableOpacity, useColorScheme } from "react-native";
+import { Text, TouchableOpacity, useColorScheme, View } from "react-native";
 import Detail from "../screens/Detail";
 import Profile from "../screens/Profile";
 import Search from "../screens/Search";
 import DetailArticle from "../screens/DetailArticle";
 import { useContext } from "react";
-import { ThemeContext } from "styled-components/native";
+import styled, { ThemeContext } from "styled-components/native";
 
 const NativeStack = createNativeStackNavigator();
+const HeaderLogo = styled.Image``;
 
 const Stack = () => {
   const theme = useContext(ThemeContext);
@@ -21,9 +22,14 @@ const Stack = () => {
         headerBackTitleVisible: false,
         headerStyle: {
           backgroundColor: `${theme.Bg0dp}`,
+          height: 48,
+          justifyContent: "center",
+          alignItems: "center",
         },
         headerTitleStyle: {
           color: `${theme.Text0dp}`,
+          fontSize: 18,
+          fontWeight: "400",
         },
         headerShown: true,
         headerTintColor: `${theme.Text0dp}`,
@@ -33,7 +39,26 @@ const Stack = () => {
       }}
     >
       <NativeStack.Screen name="Detail" component={Detail} />
-      <NativeStack.Screen name="DetailArticle" component={DetailArticle} />
+      <NativeStack.Screen
+        name="DetailArticle"
+        component={DetailArticle}
+        options={({ navigation, route }) => ({
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name={"home-filled"} color={color} size={30} />
+          ),
+          headerRight: ({ color, size }) => (
+            <View>
+              <HeaderLogo
+                source={require("../assets/images/Frame.png")}
+                style={{
+                  width: 85,
+                  resizeMode: "contain",
+                }}
+              />
+            </View>
+          ),
+        })}
+      />
 
       <NativeStack.Screen name="Profile" component={Profile} />
       <NativeStack.Screen

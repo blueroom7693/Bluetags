@@ -164,7 +164,7 @@ const SquareCard: React.FC<ISquareCard> = ({
             </ArticleTitle>
           </TitleConatainer>
           <TimeContaier>
-            <CreatedAt>{createdAt}</CreatedAt>
+            <CreatedAt>{`${new Date(createdAt).toDateString()}`}</CreatedAt>
             {SNS === "discord" ? (
               <SnsLogo
                 source={{
