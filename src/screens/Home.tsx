@@ -22,6 +22,7 @@ import CircleCard from "../components/card/CircleCard";
 import HeaderScroller from "../components/HeaderScroller";
 import { DataContext } from "../context/DataProvider";
 import axios from "axios";
+import NFTlist from "../components/card/NFTlist";
 
 //INTERFACE
 interface HMediaProps {
@@ -164,7 +165,7 @@ export default function Home() {
       setNewProjectData(arr);
     }
   }, [projectData]);
-  console.log(newProjectData);
+  // console.log(newProjectData);
   // console.log(arr);
 
   // useEffect(() => {
@@ -204,7 +205,7 @@ export default function Home() {
         {/* RECOMMEDED PROJECT FLATLIST */}
         <SubHeaderTitle>for you</SubHeaderTitle>
         <HeaderTitle>Recommended Project</HeaderTitle>
-        <NFTList
+        {/* <NFTList
           data={AllNft}
           keyExtractor={(item) => item.title}
           horizontal={true}
@@ -219,7 +220,25 @@ export default function Home() {
               logo={item.logourl}
             ></CircleCard>
           )}
+        /> */}
+        <NFTList
+          data={newProjectData}
+          keyExtractor={(item) => item[0].id}
+          horizontal={true}
+          ItemSeparatorComponent={HListSeparator}
+          contentContainerStyle={{ paddingHorizontal: 20 }}
+          // numColumns="3"
+          renderItem={({ item }) => (
+            <NFTlist
+              fullData={item}
+              firstCard={item[0]}
+              secondCard={item[1]}
+              thirdCard={item[2]}
+              forthCard={item[3]}
+            ></NFTlist>
+          )}
         />
+
         {/* RECOMMEDED ARTICLE FLATLIST */}
         <SubHeaderTitle>start with tags</SubHeaderTitle>
         <HeaderTitle>Recommended Article</HeaderTitle>
