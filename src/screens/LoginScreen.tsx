@@ -136,11 +136,6 @@ const LoginScreen = ({ navigation }) => {
 
   function logoutFun() {
     logOut({});
-
-    console.log("logout result is:");
-    console.log(logoutStatus);
-
-    console.log("result is:");
     axios
       .get("https://www.bluetags.app/api/users")
       .then((res) => console.log(res.data));
@@ -230,6 +225,7 @@ const LoginScreen = ({ navigation }) => {
     // console.log(Object.values(NftData.data));
     // console.log(Object.values(NftData.data.bluecards)[2].project.chain);
   }
+
   //RETURN
   return (
     <AuthLayout>

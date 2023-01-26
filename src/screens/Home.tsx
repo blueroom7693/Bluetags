@@ -21,6 +21,7 @@ import { AllNftNonChain } from "../AllNft";
 import CircleCard from "../components/card/CircleCard";
 import HeaderScroller from "../components/HeaderScroller";
 import { DataContext } from "../context/DataProvider";
+import axios from "axios";
 
 //INTERFACE
 interface HMediaProps {
@@ -88,7 +89,10 @@ const SubHeaderTitle = styled.Text`
 export default function Home() {
   //USERDATA
   const { user } = useContext(DataContext);
-  // console.log(user);
+  //ProjectData
+  const [projectData, setProjectData] = useState(null);
+  const [newProjectData, setNewProjectData] = useState(null);
+
   //AllNftNonChain
   const AllNft = Object.values(AllNftNonChain);
   //BOTTOM FILTER
@@ -140,8 +144,28 @@ export default function Home() {
     if (!isLoadingNft) {
       setData(Object.values(NftData.data.bluecards));
     }
-    console.log(data);
+    // console.log(data);
   }, [isLoadingNft, NftData]);
+
+  //usercheck
+  // data 분할
+  useEffect(() => {
+    axios.get("https://www.bluetags.app/api/projects").then((response) => {
+      setProjectData(response.data.projects);
+    });
+    // console.log(projectData);
+  }, []);
+  useEffect(() => {
+    if (projectData) {
+      const arr = [];
+      for (let i = 0; i < projectData.length; i = i + 4) {
+        arr.push(projectData.slice(i, i + 4));
+      }
+      setNewProjectData(arr);
+    }
+  }, [projectData]);
+  console.log(newProjectData);
+  // console.log(arr);
 
   // useEffect(() => {
   //   if (!isLoadingNft) {
@@ -180,12 +204,13 @@ export default function Home() {
         {/* RECOMMEDED PROJECT FLATLIST */}
         <SubHeaderTitle>for you</SubHeaderTitle>
         <HeaderTitle>Recommended Project</HeaderTitle>
-        {/* <NFTList
+        <NFTList
           data={AllNft}
           keyExtractor={(item) => item.title}
           horizontal={true}
           ItemSeparatorComponent={HListSeparator}
           contentContainerStyle={{ paddingHorizontal: 20 }}
+          // numColumns="3"
           renderItem={({ item }) => (
             <CircleCard
               fullData={item}
@@ -194,7 +219,7 @@ export default function Home() {
               logo={item.logourl}
             ></CircleCard>
           )}
-        /> */}
+        />
         {/* RECOMMEDED ARTICLE FLATLIST */}
         <SubHeaderTitle>start with tags</SubHeaderTitle>
         <HeaderTitle>Recommended Article</HeaderTitle>

@@ -65,6 +65,7 @@
     "react-native-swiper": "^1.6.0",
     "react-native-web": "0.17.7",
     "react-query": "^4.0.0",
+    "react-slick": "^0.29.0",
     "recoil": "^0.7.5",
     "recoil-persist": "^4.2.0",
     "styled-components": "^5.3.5"

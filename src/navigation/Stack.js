@@ -31,6 +31,7 @@ const Stack = () => {
           fontSize: 18,
           fontWeight: "400",
         },
+        headerTitleAlign: "center",
         headerShown: true,
         headerTintColor: `${theme.Text0dp}`,
         // headerBackImageSource: {
