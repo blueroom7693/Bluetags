@@ -60,6 +60,9 @@ const TimeContaier = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
+  padding-bottom: 10px;
+  border-bottom-width: 1px;
+  border-color: rgba(0, 0, 0, 0.1);
 `;
 
 const Thumbnail = styled.Image`

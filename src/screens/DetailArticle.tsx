@@ -1,12 +1,6 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components/native";
-import { AllNft } from "../AllNft";
-import { getNftInfo } from "../axios";
-import SmallHCard from "../components/card/SmallHCard";
-import SquareCard from "../components/card/SquareCard";
 
 //CSS
 const Container = styled.ScrollView`

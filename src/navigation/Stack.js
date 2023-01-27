@@ -39,7 +39,6 @@ const Stack = () => {
         // },
       }}
     >
-      <NativeStack.Screen name="Detail" component={Detail} />
       <NativeStack.Screen
         name="DetailArticle"
         component={DetailArticle}
@@ -58,6 +57,24 @@ const Stack = () => {
               />
             </View>
           ),
+        })}
+      />
+      <NativeStack.Screen
+        name="Detail"
+        component={Detail}
+        options={({ navigation, route }) => ({
+          headerRight: ({ color, size }) => (
+            <View>
+              <HeaderLogo
+                source={require("../assets/images/Frame.png")}
+                style={{
+                  width: 85,
+                  resizeMode: "contain",
+                }}
+              />
+            </View>
+          ),
+          headerShown: false,
         })}
       />
 

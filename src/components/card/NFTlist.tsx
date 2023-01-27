@@ -71,18 +71,22 @@ const NFTlist: React.FC<INFTProject> = ({
 }) => {
   //NAV
   const navigation = useNavigation();
-  const goToDetail = () => {
+  const goToDetail = (Data) => {
     //@ts-ignore
     navigation.navigate("Stack", {
       screen: "Detail",
       params: {
-        ...fullData,
+        ...Data,
       },
     });
   };
   return (
     <View>
-      <TouchableOpacity onPress={goToDetail}>
+      <TouchableOpacity
+        onPress={() => {
+          goToDetail(firstCard);
+        }}
+      >
         <Container
           style={{
             shadowColor: "rgba(0, 0, 0, 0.05)",
@@ -115,32 +119,116 @@ const NFTlist: React.FC<INFTProject> = ({
         </Container>
       </TouchableOpacity>
       {secondCard !== undefined ? (
-        <TouchableOpacity onPress={goToDetail}>
-          <Container>
+        <TouchableOpacity
+          onPress={() => {
+            goToDetail(secondCard);
+          }}
+        >
+          <Container
+            style={{
+              shadowColor: "rgba(0, 0, 0, 0.05)",
+              shadowOffset: { width: 0, height: 4 },
+              shadowRadius: 10,
+            }}
+          >
             <ProjectLogo source={{ uri: secondCard.logoUrl }}></ProjectLogo>
-            <Title>{secondCard.title}</Title>
-            <Text>|</Text>
-            <Follower>22,992</Follower>
+            <View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  width: 146,
+                }}
+              >
+                <Title>{secondCard.title}</Title>
+                <MiddleBarSVG width={11} />
+                <FollowerSVG width={17} />
+                <Follower>22,992</Follower>
+              </View>
+              <Description>Modern Hype : AA</Description>
+            </View>
+            <ChartView>
+              <ChartSVG width={47} />
+            </ChartView>
+            <BtnView>
+              <BtnSVG width={40} />
+            </BtnView>
           </Container>
         </TouchableOpacity>
       ) : null}
       {thirdCard !== undefined ? (
-        <TouchableOpacity onPress={goToDetail}>
-          <Container>
+        <TouchableOpacity
+          onPress={() => {
+            goToDetail(thirdCard);
+          }}
+        >
+          <Container
+            style={{
+              shadowColor: "rgba(0, 0, 0, 0.05)",
+              shadowOffset: { width: 0, height: 4 },
+              shadowRadius: 10,
+            }}
+          >
             <ProjectLogo source={{ uri: thirdCard.logoUrl }}></ProjectLogo>
-            <Title>{thirdCard.title}</Title>
-            <Text>|</Text>
-            <Follower>22,992</Follower>
+            <View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  width: 146,
+                }}
+              >
+                <Title>{thirdCard.title}</Title>
+                <MiddleBarSVG width={11} />
+                <FollowerSVG width={17} />
+                <Follower>22,992</Follower>
+              </View>
+              <Description>Modern Hype : AA</Description>
+            </View>
+            <ChartView>
+              <ChartSVG width={47} />
+            </ChartView>
+            <BtnView>
+              <BtnSVG width={40} />
+            </BtnView>
           </Container>
         </TouchableOpacity>
       ) : null}
       {forthCard !== undefined ? (
-        <TouchableOpacity onPress={goToDetail}>
-          <Container>
+        <TouchableOpacity
+          onPress={() => {
+            goToDetail(forthCard);
+          }}
+        >
+          <Container
+            style={{
+              shadowColor: "rgba(0, 0, 0, 0.05)",
+              shadowOffset: { width: 0, height: 4 },
+              shadowRadius: 10,
+            }}
+          >
             <ProjectLogo source={{ uri: forthCard.logoUrl }}></ProjectLogo>
-            <Title>{forthCard.title}</Title>
-            <Text>|</Text>
-            <Follower>22,992</Follower>
+            <View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  width: 146,
+                }}
+              >
+                <Title>{forthCard.title}</Title>
+                <MiddleBarSVG width={11} />
+                <FollowerSVG width={17} />
+                <Follower>22,992</Follower>
+              </View>
+              <Description>Modern Hype : AA</Description>
+            </View>
+            <ChartView>
+              <ChartSVG width={47} />
+            </ChartView>
+            <BtnView>
+              <BtnSVG width={40} />
+            </BtnView>
           </Container>
         </TouchableOpacity>
       ) : null}

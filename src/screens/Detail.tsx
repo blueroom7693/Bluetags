@@ -5,6 +5,7 @@ import { FlatList, Text, TouchableOpacity } from "react-native";
 import styled, { ThemeContext } from "styled-components/native";
 import { getNftInfo } from "../axios";
 import SmallHCard from "../components/card/SmallHCard";
+// import { LinearGradient } from "expo-linear-gradient";
 import SquareCard from "../components/card/SquareCard";
 
 //INTERFACE
@@ -47,9 +48,9 @@ const Header = styled.View`
   margin: 40px;
 `;
 const ProjectLogo = styled.Image`
-  height: 220px;
-  width: 220px;
-  border-radius: 200px;
+  height: 294px;
+  width: 428px;
+  margin-top: -40px;
 `;
 const ProjectName = styled.Text`
   font-size: 24px;
@@ -83,7 +84,7 @@ const Detail = ({ navigation: { setOptions }, route: { params } }) => {
   const [data, setData] = useState<IData[]>();
   useEffect(() => {
     if (!isLoadingNft) {
-      setData(Object.values(searchedData?.data));
+      // setData(Object.values(searchedData?.data));
     }
   }, [isLoadingNft, searchedData]);
   //RETURN
@@ -92,8 +93,13 @@ const Detail = ({ navigation: { setOptions }, route: { params } }) => {
       ListHeaderComponent={
         <>
           {/* HEADER */}
+          {/* <LinearGradient
+            // Background Linear Gradient
+            colors={["rgba(0,0,0,0.8)", "transparent"]}
+            // style={styles.background}
+          /> */}
           <Header>
-            <ProjectLogo source={{ uri: params.logourl }}></ProjectLogo>
+            <ProjectLogo source={{ uri: params.logoUrl }}></ProjectLogo>
             <ProjectName>{params.title}</ProjectName>
           </Header>
           {/* SNS */}

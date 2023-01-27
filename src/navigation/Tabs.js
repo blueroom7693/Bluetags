@@ -28,6 +28,7 @@ import Home from "../screens/Home";
 import { useContext } from "react";
 import { ThemeContext } from "styled-components/native";
 import * as NavigationBar from "expo-navigation-bar";
+import HomeSVG from "../assets/images/misc/house-blank-solid.svg";
 
 DrawerActions;
 
